@@ -18,7 +18,4 @@ def create_app():
     from .spotify_api import bp as spotify_api
     app.register_blueprint(spotify_api)
     
-    from .spotify_auth import bp as spotify_auth
-    app.register_blueprint(spotify_auth)
-    
     return app

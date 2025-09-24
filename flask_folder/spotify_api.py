@@ -84,7 +84,7 @@ def ensure_access_token() -> str | None:
     if access and time.time() < exp_at:
         return access       # Early exit if the token is still good
 
-    refresh = session.get('spotify_refresh_token')
+    refresh = session.get('spotify_refresh_token') or os.getenv("SPOTIFY_REFRESH_TOKEN")        # the os.getenv will go away once auth is implemented
     if not refresh:
         return None         # Give up if there is no spotify_refresh_token
 
