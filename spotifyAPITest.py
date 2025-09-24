@@ -4,8 +4,6 @@ import http.server
 import json
 import os
 import secrets
-import socket
-import threading
 import urllib.parse
 import webbrowser
 import requests
@@ -177,6 +175,7 @@ def now_playing(access_token):
         return
 
     payload = r.json()
+    # print(json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True))
 
     # Safe field access to avoid KeyErrors if fields are missing
     item = (payload.get("item") or {})
