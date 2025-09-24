@@ -5,7 +5,7 @@
 
 ---
 
-## 🎯 Description 
+## 🎯 Description
 
 **Who you’re working with**  
 Team Members:  
