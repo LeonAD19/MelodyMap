@@ -12,6 +12,7 @@ import requests
 import sys
 import time
 from dataclasses import dataclass
+from http.server import HTTPServer
 
 # ==== SPOTIFY DASHBOARD LINK ====
 # The redirect will almost definetly need to be changed
@@ -55,17 +56,9 @@ class OAuthResult:
 # Purpose: Open browser for login/consent, receive 'code' on localhost:8080,
 #          exchange the code (plus PKCE verifier) for an access token.
 def get_access_token() -> str:
-    if CLIENT_ID == "YOUR_SPOTIFY_CLIENT_ID":
-        print("Please set CLIENT_ID.")
-        sys.exit(1)
-
     # PKCE + CSRF state
     code_verifier, code_challenge = create_pkce_pair()
     state = secrets.token_urlsafe(16)
-
-    # Start the local callback server
-    httpd = start_server()
-    print(f"Listening on {REDIRECT_URI} ...")
 
     # Build /authorize URL and open the browser
     params = {
@@ -78,7 +71,7 @@ def get_access_token() -> str:
         "scope": " ".join(SCOPES),
         "show_dialog": "true",
     }
-    auth_url = AUTH_URL + "?" + urllib.parse.urlencode(params)
+    auth_url = AUTH_URL + "?" + urllib.parse.urlencode(params)    
     print("\nAuthorize URL (copy/paste if needed):")
     print(auth_url, "\n")
     print("Opening browser for Spotify login...")
@@ -86,13 +79,8 @@ def get_access_token() -> str:
 
     # Wait for Spotify to redirect with ?code=... (auth complete)
     print("Waiting for Spotify to redirect with ?code=...")
-    if not got_callback.wait(timeout=10):   # <— you set a 10s timeout here
-        httpd.shutdown()
-        print("Timed out waiting for redirect. Try again.")
-        sys.exit(1)
-
-    # Stop the server; we got our one callback
-    httpd.shutdown()
+    # Start the local callback server
+    wait_for_callback()
 
     # Validate and extract the code
     if OAuthHandler.result.error:
@@ -126,13 +114,19 @@ def get_access_token() -> str:
     print("Access token acquired ✔")
     return access_token
 
-
 # =========================
 # SERVER SETUP (local loopback)
 # =========================
 # Purpose: Minimal HTTP server that listens on 127.0.0.1 to receive
 #          Spotify’s redirect with ?code=...&state=...
-got_callback = threading.Event()
+def wait_for_callback():
+    host = "127.0.0.1"
+    port = urllib.parse.urlparse(REDIRECT_URI).port or 8080
+    httpd = HTTPServer((host, port), OAuthHandler)
+    httpd.timeout = 120  # optional: give yourself time to click “Agree”
+    print(f"Listening on {REDIRECT_URI} ...")
+    httpd.handle_request()   # handle exactly ONE request, then return
+    httpd.server_close()
 
 class OAuthHandler(http.server.BaseHTTPRequestHandler):
     result: OAuthResult = OAuthResult()
@@ -162,20 +156,8 @@ class OAuthHandler(http.server.BaseHTTPRequestHandler):
         else:
             self.wfile.write(b"<h2>No code in query. Did you open this URL manually?</h2>")
 
-        # Notify the main thread that the redirect arrived.
-        got_callback.set()
-
     def log_message(self, *args, **kwargs):
         pass  # silence default logs
-
-def start_server():
-    # Spins up the local HTTP server in a background thread.
-    host = "127.0.0.1"
-    port = urllib.parse.urlparse(REDIRECT_URI).port or 8080
-    httpd = http.server.HTTPServer((host, port), OAuthHandler)
-    t = threading.Thread(target=httpd.serve_forever, daemon=True)
-    t.start()
-    return httpd
 
 # =========================
 # API CALL (business logic)
@@ -199,11 +181,15 @@ def now_playing(access_token):
     # Safe field access to avoid KeyErrors if fields are missing
     item = (payload.get("item") or {})
     name = item.get("name") or "Unknown"
-    album = (item.get("album") or {}).get("name") or "Unknown"   # <-- safer than item.get("album").get("name")
+    album = item.get("album") or {}
+    album_name = album.get("name") or "Unknown"
+    album_images = album.get("images") or "N/A"
+    album_art = album_images[0].get("url")     # get url from images
     artists_list = item.get("artists") or []
     artists = ", ".join(a.get("name", "") for a in artists_list) or "Unknown"
 
-    print(f"Now playing: {name} ({album}) — {artists}")
+    print(f"\nNow playing: {name} ({album_name}) — {artists}")
+    print(f"Link to art: {album_art}")
 
 
 # =========================
