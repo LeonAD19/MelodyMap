@@ -6,20 +6,18 @@ from .spotify_tokens import set_tokens, clear_tokens
 
 # ==== SPOTIFY DASHBOARD LINK ====
 # The redirect will almost definetly need to be changed
-# https://developer.spotify.com/dashboard/{8fe0b36abc4744aca36f7c9bca17ef74}
+# https://developer.spotify.com/dashboard/8fe0b36abc4744aca36f7c9bca17ef74
 
 bp = Blueprint('spotify_api', __name__, url_prefix='/spotify')
 
 # =========================
 # CONFIG (used by all parts)
 # =========================
-# These constants are referenced by both the auth flow and the API call.
 
 CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
 REDIRECT_URI = os.getenv('SPOTIFY_REDIRECT_URI')  # must match Spotify Dashboard
 SCOPES = os.getenv('SPOTIFY_SCOPES', '').split()
 
-AUTH_URL = 'https://accounts.spotify.com/authorize'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'
     
 # =========================
