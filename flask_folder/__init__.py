@@ -15,7 +15,10 @@ def create_app():
     from .routes import routes
     app.register_blueprint(routes, url_prefix = '/')
     
-    from .spotifyAPI import bp as spotify_bp
-    app.register_blueprint(spotify_bp)
+    from .spotify_api import bp as spotify_api
+    app.register_blueprint(spotify_api)
+    
+    from .spotify_auth import bp as spotify_auth
+    app.register_blueprint(spotify_auth)
     
     return app
