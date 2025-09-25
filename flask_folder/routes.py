@@ -25,7 +25,7 @@ CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')# Spotify App Client Secret
 REDIRECT_URI = os.getenv('SPOTIFY_REDIRECT_URI')  # URL Spotify redirects to after login
 SCOPE = "user-read-currently-playing"             # Permission to read user's currently playing track
 
-# Routes to Home
+# Routes to Home Page
 @routes.route('/' )
 def home():
     return render_template("home.html")
