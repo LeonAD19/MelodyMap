@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Melody Map Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Visual Design Reference</h1>
+  <h2>Rough draft for later implementation</h2>
+
+    <!-- to create real functionality in any of this
+    CSS and JavaScript will need to be utilizied BUT for now
+    these operate as good placeholders and an idea of how my 
+    drawing will be translated into actual feasible code -->
+  <div class = mapContainer>
+    <img id="map" 
+        src="https://cdn.shopify.com/s/files/1/0150/2280/files/Map_of_Texas_State_University_Campus_1024x1024.png?v=1719286167">
+    <button id="zoomIn">+</button>
+    <button id="zoomOut">-</button>
+  </div>
+
+  <label for="genres">Choose a genre:</label>
+  <select name="filters" id="genres">
+    <option value="dummy">Select a genre</option>
+    <option value="dungeonsynth">Dungeon Synth</option>
+    <option value="folkpunk">Folk Punk</option>
+    <option value="yacht">Yacht Rock</option>
+
+    
+  </select>
+
+  <script src="script.js"></script> <!--links the java script-->
+</body>
+</html>
