@@ -1,0 +1,7 @@
+SPOTIFY_CLIENT_ID=''
+SPOTIFY_REDIRECT_URI=''
+SPOTIFY_SCOPES=''
+
+FLASK_SECRET_KEY=''
+
+SPOTIFY_REFRESH_TOKEN='' # this will go away once leon makes AUTH
