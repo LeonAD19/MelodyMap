@@ -3,5 +3,29 @@
   <div class="jumbo">
     <h2>Welcome to the Flask app<h2>
     <h3>This is the home page for the Flask app<h3>
+      
+                <!-- Spotify Login Button -->
+      
+      <!-- Clicking this button sends the user to the '/login' route in routes.py.
+      That route starts the Spotify OAuth flow, redirecting the user to Spotify to authorize the app. -->
+      <a href = "{{ url_for('routes.login') }}" 
+      class = "btn btn-success">Login with Spotify</a>
+
+                <!-- Display flash messages --> 
+
+        <!-- Flashed messages are stored in the session and will be displayed here
+            -Login failed
+            - Failed to get token
+            - Logen successfully 
+            -->
+      {% with messages = get_flashed_messages(with_categories=true) %} <!-- Using bootstrap alert classes -->
+        {% if messages %}
+          {% for category, message in messages %}
+            <!-- Displays the message inside a Bootstrap alert div -->
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
   </div>
 {% endblock %}
