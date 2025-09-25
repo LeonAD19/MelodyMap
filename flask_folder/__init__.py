@@ -20,5 +20,5 @@ def create_app():
 
     from .spotify_routes import spotify_bp
     app.register_blueprint(spotify_bp)
-    
+
     return app
