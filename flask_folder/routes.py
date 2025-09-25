@@ -26,7 +26,7 @@ REDIRECT_URI = os.getenv('SPOTIFY_REDIRECT_URI')  # URL Spotify redirects to aft
 SCOPE = "user-read-currently-playing"             # Permission to read user's currently playing track
 
 # Routes to Home
-routes.route('/' )
+@routes.route('/' )
 def home():
     return render_template("home.html")
 
