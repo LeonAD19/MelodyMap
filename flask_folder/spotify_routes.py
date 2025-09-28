@@ -26,7 +26,9 @@ def login():
         "client_id": CLIENT_ID,
         "scope": SCOPE,
         "redirect_uri": REDIRECT_URI,
+        "show_dialog": "true"
     }
+
     url_args = "&".join([f"{key}={requests.utils.quote(val)}" for key, val in auth_query.items()])
     auth_url = f"{SPOTIFY_AUTH_URL}?{url_args}"
     return redirect(auth_url)
@@ -53,6 +55,11 @@ def callback():
         flash("Failed to get token. Please try again.")
         return redirect(url_for('routes.home'))
 
-    session['access_token'] = response.json()['access_token']
-    flash("Login successful!")
+    from .spotify_tokens import set_tokens
+
+    token_info = response.json()
+    set_tokens(token_info)
+
+    flash("Login successful!", "success")
     return redirect(url_for('routes.home'))
+    
