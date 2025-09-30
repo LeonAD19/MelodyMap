@@ -17,3 +17,26 @@ def clear_tokens() -> None:
     for k in list(session.keys()):
         if k.startswith('spotify_'):
             session.pop(k)
+
+# Return a valid access token
+# Should refresh if needed
+def get_access_token() -> str | None:
+    access = session.get('spotify_access_token')
+    exp_at = session.get('spotify_expires_at', 0)
+    
+    if access and time.time() < exp_at:
+        return access       # Early exit if the token is still good.
+
+    refresh = session.get('spotify_refresh_token')
+    if not refresh:
+        return None         # Give up if there is no spotify_refresh_token
+
+    from .spotify_routes import refresh_spotify_client_token
+    r = refresh_spotify_client_token(token=refresh)
+    
+    if r.status_code != 200:
+        clear_tokens()
+        return None
+    
+    set_tokens(r.json())
+    return session.get('spotify_access_token')

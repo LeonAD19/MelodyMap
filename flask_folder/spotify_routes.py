@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import request, Blueprint, redirect, session, url_for, flash
+from flask import request, Blueprint, redirect, url_for, flash
 from dotenv import load_dotenv
 import sys
 sys.dont_write_bytecode = True
@@ -63,3 +63,13 @@ def callback():
     flash("Login successful!", "success")
     return redirect(url_for('routes.home'))
     
+def refresh_client_token(token):
+    return requests.post(
+        SPOTIFY_TOKEN_URL, 
+        data = {
+                'grant_type': 'refresh_token',
+                'refresh_token': token,
+                'client_id': CLIENT_ID,
+            }, 
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    )

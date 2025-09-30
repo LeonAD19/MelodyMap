@@ -1,8 +1,6 @@
-import os
 import requests
-import time
-from flask import Blueprint, session, jsonify
-from .spotify_tokens import set_tokens, clear_tokens
+from flask import Blueprint, render_template, jsonify
+from .spotify_tokens import clear_tokens, get_access_token
 
 # ==== SPOTIFY DASHBOARD LINK ====
 # The redirect will almost definetly need to be changed
@@ -13,12 +11,6 @@ bp = Blueprint('spotify_api', __name__, url_prefix='/spotify')
 # =========================
 # CONFIG (used by all parts)
 # =========================
-
-CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
-REDIRECT_URI = os.getenv('SPOTIFY_REDIRECT_URI')  # must match Spotify Dashboard
-SCOPES = os.getenv('SPOTIFY_SCOPES', '').split()
-
-TOKEN_URL = 'https://accounts.spotify.com/api/token'
     
 # =========================
 # API CALL (business logic)
@@ -26,7 +18,7 @@ TOKEN_URL = 'https://accounts.spotify.com/api/token'
 # Purpose: Use the access token to call /v1/me/player/currently-playing,
 @bp.route('/now_playing')
 def now_playing():
-    token = ensure_access_token()
+    token = get_access_token()
     if not token:
         return jsonify({'authorized': False, 'playing': None})
     
@@ -73,32 +65,10 @@ def now_playing():
         }
     })
 
-# Return a valid access token
-# Should refresh if needed
-def ensure_access_token() -> str | None:
-    access = session.get('spotify_access_token')
-    exp_at = session.get('spotify_expires_at', 0)
-    
-    if access and time.time() < exp_at:
-        return access       # Early exit if the token is still good.
-
-    refresh = session.get('spotify_refresh_token') or os.getenv("SPOTIFY_REFRESH_TOKEN")        # the os.getenv will go away once auth is implemented
-    if not refresh:
-        return None         # Give up if there is no spotify_refresh_token
-
-    r = requests.post(
-        TOKEN_URL, 
-        data = {
-                'grant_type': 'refresh_token',
-                'refresh_token': refresh,
-                'client_id': CLIENT_ID,
-            }, 
-        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    )
-    
-    if r.status_code != 200:
-        clear_tokens()
-        return None
-    
-    set_tokens(r.json())
-    return session.get('spotify_access_token')
+# =========================
+# API CALL (business logic)
+# =========================
+# Purpose: Render the currently playing song
+@bp.route('/render_now_playing')
+def render_now_playing():
+    return render_template('render_now_playing.html')

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Now Playing</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    #data { white-space: pre; background: #f0f0f0; padding: 1rem; border-radius: 8px; }
+  </style>
+</head>
+  <body>
+    <h1>Now Playing</h1>
+  <iframe id="np" src="/spotify/now_playing"
+          style="width:100%;height:320px;border:1px solid #ddd;border-radius:8px;"></iframe>
+
+  <script>
+    // Re-load the iframe every 3s to poll
+    setInterval(() => {
+      const f = document.getElementById('np');
+      // cache-buster so intermediaries don't serve stale
+      const url = new URL(f.src, window.location.origin);
+      url.searchParams.set('_', Date.now());
+      f.src = url.toString();
+    }, 3000);
+  </script>
+</body>
+</html>
