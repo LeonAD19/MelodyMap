@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Now Playing</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    #data { white-space: pre; background: #f0f0f0; padding: 1rem; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Now Playing</h1>
+  <div id="data">Loading...</div>
+
+  <script>
+    function fetchNowPlaying() {
+      fetch('/spotify/now_playing')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('data').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(err => {
+          document.getElementById('data').textContent = "Error: " + err;
+        });
+    }
+
+    setInterval(fetchNowPlaying, 3000);
+    fetchNowPlaying();
+  </script>
+</body>
+</html>
