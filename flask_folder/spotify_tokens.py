@@ -31,8 +31,8 @@ def get_access_token() -> str | None:
     if not refresh:
         return None         # Give up if there is no spotify_refresh_token
 
-    from .spotify_routes import refresh_spotify_client_token
-    r = refresh_spotify_client_token(token=refresh)
+    from .spotify_routes import refresh_client_token
+    r = refresh_client_token(token=refresh)
     
     if r.status_code != 200:
         clear_tokens()
