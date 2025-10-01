@@ -13,4 +13,7 @@ routes = Blueprint('routes', __name__)
 
 @routes.route('/' )
 def home():
-    return render_template("home.html")
+    from .spotify_api import is_logged_in
+    user_auth = is_logged_in()
+
+    return render_template("home.html", user_auth=user_auth)

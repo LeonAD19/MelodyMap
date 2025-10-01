@@ -52,7 +52,7 @@ def callback():
 
     response = requests.post(SPOTIFY_TOKEN_URL, data=token_data)
     if response.status_code != 200:
-        flash("Failed to get token. Please try again.")
+        flash("spotifylogo.png", "success")
         return redirect(url_for('routes.home'))
 
     from .spotify_tokens import set_tokens
