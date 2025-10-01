@@ -10,10 +10,18 @@ body {
 
 header {
   background-color: #2B2B2B;
-  height: 60px;
-  width: 100%;
-  opacity: .9;
-  margin-bottom: 10px;
+  display: flex;          /* lets you align items */
+  align-items: center;    /* vertically center */
+  justify-content: flex-start; /* push content to the left */
+  height: 60px;           /* adjust to your header size */
+  padding: 0 15px
+}
+
+header .loggedIn img {
+  height: 100%;      
+  max-height: 50px;  
+  width: auto;       
+  object-fit: contain;
 }
 
 header h1.logo {
