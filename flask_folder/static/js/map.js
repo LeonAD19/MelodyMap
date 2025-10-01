@@ -1,4 +1,7 @@
 // Melody Map - Leaflet minimal client (frontend-only MVP)
+//The code below lets you scroll, click, and zoom
+//Users should be able to move around in the map after allowing website to use their location
+//Previous commit had code needed for MM-44. However, it was previously tested just to see that the map API was successfully implemented
 (function () {
   // Create the map
   const map = L.map("map");
