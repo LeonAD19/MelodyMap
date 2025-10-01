@@ -65,6 +65,8 @@ def now_playing():
         }
     })
 
+
+
 # =========================
 # API CALL (business logic)
 # =========================
@@ -72,3 +74,35 @@ def now_playing():
 @bp.route('/render_now_playing')
 def render_now_playing():
     return render_template('render_now_playing.html')
+
+
+import requests
+from .spotify_tokens import clear_tokens, get_access_token
+
+def is_logged_in():
+    token = get_access_token()
+    if not token:
+        return False
+
+    r = requests.get(
+        "https://api.spotify.com/v1/me",
+        headers={"Authorization": f"Bearer {token}"}
+    )
+
+    if r.status_code == 200:
+        return True
+    elif r.status_code in (401, 403):
+        clear_tokens()
+        return False
+    
+    return False
+
+
+       
+        
+        
+        
+   
+
+
+
