@@ -10,14 +10,7 @@
       That route starts the Spotify OAuth flow, redirecting the user to Spotify to authorize the app. -->
       <a href = "{{ url_for('spotify_bp.login') }}" class = "btn btn-success">Login with Spotify</a>
 
-      {% if user_auth %}
-        <p>You are logged in!</p>
-      {% else %}
-        <p>You are not logged in.</p>
-      {% endif %}
-
-
-
+  
       <!-- Display flash messages --> 
 
         <!-- Flashed messages are stored in the session and will be displayed here
@@ -26,9 +19,6 @@
             - Logen successfully 
             -->
 
-            
-
-
       {% with messages = get_flashed_messages(with_categories=true) %} <!-- Using bootstrap alert classes -->
         {% if messages %}
           {% for category, message in messages %}
@@ -36,14 +26,7 @@
             <div class="alert alert-{{ category }}">{{ message }}</div>
           {% endfor %}
         {% endif %}
-      {% endwith %}
-
-
-      
-
-
-
-      
+      {% endwith %}  
 
   </div>
 {% endblock %}

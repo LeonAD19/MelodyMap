@@ -14,8 +14,15 @@
   <body>
 
   <header>
+    <!--Displays the spotify icon only IF the user is successfully logged in-->
+    <div class="loggedIn">
+      {% if user_auth %}
+      <img src="{{ url_for('static', filename='spotifylogo.png') }}" alt="Spotify Logo">
+      {% endif %}
+
+    </div>
     <div class="container">
-      <h1 class="logo">Flask App</h1>
+      <h1 class="logo">Melody Map</h1>
       <nav>
         <ul class="menu">
           <li><a href="{{ url_for('routes.home') }}">Home</a></li>
