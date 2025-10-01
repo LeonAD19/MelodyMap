@@ -14,3 +14,8 @@ routes = Blueprint('routes', __name__)
 @routes.route('/' )
 def home():
     return render_template("home.html")
+
+# Map page
+@routes.route('/map')
+def map_page():
+    return render_template('map.html')
