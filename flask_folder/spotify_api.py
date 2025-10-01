@@ -9,10 +9,6 @@ from .spotify_tokens import clear_tokens, get_access_token
 bp = Blueprint('spotify_api', __name__, url_prefix='/spotify')
 
 # =========================
-# CONFIG (used by all parts)
-# =========================
-    
-# =========================
 # API CALL (business logic)
 # =========================
 # Purpose: Use the access token to call /v1/me/player/currently-playing,
@@ -65,8 +61,6 @@ def now_playing():
         }
     })
 
-
-
 # =========================
 # API CALL (business logic)
 # =========================
@@ -96,13 +90,3 @@ def is_logged_in():
         return False
     
     return False
-
-
-       
-        
-        
-        
-   
-
-
-
