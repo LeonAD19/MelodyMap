@@ -17,6 +17,8 @@
   const fallback = { lat: 29.888, lng: -97.941, zoom: 14 };
 
   // Try to center on user, else use fallback
+  //The function below satisfies the task of MM-57 since it centers itself around the user location
+  //Uses Geolocation in order to center around user's location
   function centerMap() {
     if (!navigator.geolocation) {
       map.setView([fallback.lat, fallback.lng], fallback.zoom);
