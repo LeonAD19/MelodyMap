@@ -10,7 +10,7 @@
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
-  // Fallback center (Texas State vicinity) if geolocation is denied/unavailable
+  //This part correlates to MM-45 as it has its fallback center to the (Texas State vicinity) if geolocation is denied/unavailable
   const fallback = { lat: 29.888, lng: -97.941, zoom: 14 };
 
   // Try to center on user, else use fallback
@@ -24,10 +24,10 @@
         const { latitude, longitude } = pos.coords;
         map.setView([latitude, longitude], 15);
 
-        // Visual 1-mile radius around user (1609.34 meters)
+        //This initializes a visual 1-mile radius around user 
         L.circle([latitude, longitude], { radius: 1609.34 }).addTo(map);
 
-        // Mark the user's approximate location
+        //These lines allow the user to mark the user's approximate location
         L.marker([latitude, longitude]).addTo(map)
           .bindPopup("<b>You are here</b>").openPopup();
       },
@@ -38,7 +38,9 @@
     );
   }
 
-  // Click to add a demo marker (no backend yet)
+  //These lines allow a user to click and put a pin somewhere on the map, provides coordinates as well
+  //Multiple pins may be displayed and available to user
+  //Lines below satisfy MM-45 requirements
   map.on("click", (e) => {
     const { lat, lng } = e.latlng;
     L.marker([lat, lng])
@@ -47,7 +49,7 @@
       .openPopup();
   });
 
-  // Lazy refetch hook (placeholder for when you add a backend later)
+  //This is a lazy refetch hook (placeholder for when you add a backend later)
   let refetchTimer = null;
   map.on("moveend", () => {
     if (refetchTimer) clearTimeout(refetchTimer);
