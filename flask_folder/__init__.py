@@ -18,6 +18,7 @@ def create_app():
     from .spotify_api import bp as spotify_api
     app.register_blueprint(spotify_api)
 
+    ### Spotify OAuth Blueprint ###
     from .spotify_routes import spotify_bp
     app.register_blueprint(spotify_bp)
 
