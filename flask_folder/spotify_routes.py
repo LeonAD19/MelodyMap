@@ -33,6 +33,7 @@ def login():
     auth_url = f"{SPOTIFY_AUTH_URL}?{url_args}"
     return redirect(auth_url)
 
+### Callback route that Spotify redirects to after login
 @spotify_bp.route('/callback')
 def callback():
     code = request.args.get("code")
@@ -42,6 +43,7 @@ def callback():
         flash("Login Failed. Please try again.")
         return redirect(url_for('routes.home'))
 
+    ### Exchange code for access token
     token_data = {
         "grant_type": "authorization_code",
         "code": code,
@@ -55,6 +57,7 @@ def callback():
         flash("spotifylogo.png", "success")
         return redirect(url_for('routes.home'))
 
+    ### Save tokens in session
     from .spotify_tokens import set_tokens
 
     token_info = response.json()
