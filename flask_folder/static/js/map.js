@@ -46,13 +46,26 @@
   //These lines allow a user to click and put a pin somewhere on the map, provides coordinates as well
   //Multiple pins may be displayed and available to user
   //Lines below satisfy MM-45 requirements
-  map.on("click", (e) => {
-    const { lat, lng } = e.latlng;
+  map.on("click", async (e) => {
+  const { lat, lng } = e.latlng;
+
+  try {
+    const res = await fetch("/spotify/now_playing?_" + Date.now());
+    const html = await res.text();   // ⬅️ get the HTML, not JSON
+
     L.marker([lat, lng])
       .addTo(map)
-      .bindPopup(`<b>Demo Pin</b><br>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`)
+      .bindPopup(`
+        <div style="max-width:250px;">
+          ${html}
+          <br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>
+        </div>
+      `)
       .openPopup();
-  });
+  } catch (err) {
+    L.marker([lat, lng]).addTo(map).bindPopup("<b>Could not load song info</b>").openPopup();
+  }
+});
 
   //This is a lazy refetch hook (placeholder for when you add a backend later)
   let refetchTimer = null;
