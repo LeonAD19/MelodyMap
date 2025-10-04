@@ -27,8 +27,8 @@ SPOTIFY_ERROR_MESSAGES = {
 @bp.route('/now_playing')
 def now_playing():
     token = get_access_token()
-    if not token:
-        return jsonify({'authorized': False, 'playing': None})
+    #if not token:
+    #    return jsonify({'authorized': False, 'playing': None})
     
     r = requests.get(
         'https://api.spotify.com/v1/me/player/currently-playing', 
@@ -36,14 +36,33 @@ def now_playing():
     )
 
     # print('\nCurrently Playing status:', r.status_code)
-    if r.status_code == 204:
-        return jsonify({'authorized': True, 'playing': None})
-    if r.status_code in (401, 403):
-        clear_tokens()
-        return jsonify({"authorized": False, "playing": None}), r.status_code
-    if r.status_code != 200:
-        return jsonify({'authorized': True, 'error': r.text}), r.status_code
+    #if r.status_code == 204:
+    #    return jsonify({'authorized': True, 'playing': None})
+    #if r.status_code in (401, 403):
+      #  clear_tokens()
+     #   return jsonify({"authorized": False, "playing": None}), r.status_code
+    #if r.status_code != 200:
+    #    return jsonify({'authorized': True, 'error': r.text}), r.status_code
 
+  #  if r.status_code in (401, 403):
+    #    clear_tokens()
+     #   return jsonify({
+     #       #"authorized": False,
+      #      "error": SPOTIFY_ERROR_MESSAGES.get(r.status_code, "Authorization error.")
+    #    }), r.status_code
+    
+    if r.status_code != 200:
+        if r.status_code in (401, 403):
+            clear_tokens()
+            return jsonify({
+            #"authorized": False,
+            "error": SPOTIFY_ERROR_MESSAGES.get(r.status_code, "Authorization error.")
+        }), r.status_code
+        else: 
+            return jsonify({
+                "error": SPOTIFY_ERROR_MESSAGES.get(r.status_code, "Authorization error.")
+        })
+            
     payload = r.json()
     # print(json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True))
 
