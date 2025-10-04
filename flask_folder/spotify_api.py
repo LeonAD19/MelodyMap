@@ -8,6 +8,18 @@ from .spotify_tokens import clear_tokens, get_access_token
 
 bp = Blueprint('spotify_api', __name__, url_prefix='/spotify')
 
+SPOTIFY_ERROR_MESSAGES = {
+    204: "No content - nothing is currently playing.",
+    400: "Bad request - check your request parameters.",
+    401: "Unauthorized - your token may be invalid or expired.",
+    403: "Forbidden - you don’t have permission to access this resource.",
+    404: "Not found - the resource doesn’t exist.",
+    429: "Too many requests - you are being rate limited.",
+    500: "Internal Server Error - Spotify had an issue.",
+    502: "Bad Gateway - The server was acting as a gateway or proxy and received an invalid response from the upstream server.",
+    503: "Service Unavailable - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.",
+}
+
 # =========================
 # API CALL (business logic)
 # =========================
@@ -15,23 +27,25 @@ bp = Blueprint('spotify_api', __name__, url_prefix='/spotify')
 @bp.route('/now_playing')
 def now_playing():
     token = get_access_token()
-    if not token:
-        return jsonify({'authorized': False, 'playing': None})
     
     r = requests.get(
         'https://api.spotify.com/v1/me/player/currently-playing', 
         headers = {'Authorization': f'Bearer {token}'}
     )
 
-    # print('\nCurrently Playing status:', r.status_code)
-    if r.status_code == 204:
-        return jsonify({'authorized': True, 'playing': None})
-    if r.status_code in (401, 403):
-        clear_tokens()
-        return jsonify({"authorized": False, "playing": None}), r.status_code
-    if r.status_code != 200:
-        return jsonify({'authorized': True, 'error': r.text}), r.status_code
 
+    if r.status_code != 200:
+        if r.status_code in (401, 403):
+            clear_tokens()
+            return jsonify({
+            #"authorized": False,
+            "error": SPOTIFY_ERROR_MESSAGES.get(r.status_code, "Authorization error.")
+        }), r.status_code
+        else: 
+            return jsonify({
+                "error": SPOTIFY_ERROR_MESSAGES.get(r.status_code, "Authorization error.")
+        })
+            
     payload = r.json()
     # print(json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True))
 
