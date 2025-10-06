@@ -2,31 +2,38 @@
 
 ## What went well and what not? 
 * __Not well__: 
-    * 
+    * Time spent working was not evenly spread over the days between sprints
+    * We should've considered making sure tasks didn't rely on each other becuase it caused blocks from the start
 * __Well__: 
-    * 
+    * We brainstormed and determined our project's development and ideal final version quickly
+    * We figured out issues with BitBucket and GitKraken quickly and as a team
 
 * __Caden__ : 
-* __Devin__ : 
+* __Devin__ : Something that went well for me was being able to communicate with and recieve updates from team members through Slack. 
 * __Jacob__ :
 * __Leon__ : 
 * __Mateo__ : 
 
 
 ## What might be impending us from performing better?
-* Familiarity with eachother and the tools we use. Especially using Git.
+* Familiarity with each other and the tools we use. Especially using Git effectively.
 
 ## What can I do to improve?
 * __Caden__ : 
-* __Devin__ : 
+* __Devin__ : I need to make sure to reach out to team members to get help understanding their code (if I'm modifying/referencing it) before starting a task.
 * __Jacob__ :
 * __Leon__ : 
 * __Mateo__ : 
 
 ## AI
 ### Description of how AI (ChatGPT, Anthropic, Genesis, etc) assisted the team during the semester.
-
+* AI assissted our team by providing a resource that could generate information and responses based directly on our project, not just general information. This made it useful and directly applicable to certain issues we encountered. 
 ### At least 3 specific examples of what AI was especially good at.
+ 1. AI assissted in creating guidelines of how to layout code, especially when we were unfamiliar with the langauge or API. 
+ 2. AI could take code snippets we were having issues with and point out errors or potential revisions that went overlooked.
+ 3. AI helped us understand and work with each other's code when team members weren't avaible to immediately explain it. 
 
 ### At least 3 specific examples of how you had to be careful using AI to get good results or decided to avoid AI assistance entirely.
-
+1. AI can get confused quickly, especially when handling a lot of information at once. We had to make sure to provide adequate context and narrower prompts to guide it to a suitable answer. 
+2. Sometimes AI would over-optimize or make changes that were not requested. 
+3. When trying to get certain parts of the program to work with each other (ex. Spotify API and the map), the AI wouldn't always understand what was already present/working and what was needed. This is when we tended to avoid it, or give it smaller tasks. 
