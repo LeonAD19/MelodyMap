@@ -71,3 +71,11 @@ We plan to use the following technologies:
 
 6. **Nearby Listening Visibility**  
    - Allows users to see what others within a one-mile radius are listening to in real time.  
+##
+# Sprint 1 Review
+
+### Review and Retrospective
+
+* For this sprint our main focus was to create the website, communicate with spotify api, and create a map.
+
+![Sprint1-Burnup](./Documentation/Sprint1-Burnup.png)
