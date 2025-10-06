@@ -76,6 +76,31 @@ We plan to use the following technologies:
 
 ### Review and Retrospective
 
-* For this sprint our main focus was to create the website, communicate with spotify api, and create a map.
+For this sprint our main focus was to create the website, communicate with spotify api, and create a map.
 
-![Sprint1-Burnup](./Documentation/Sprint1-Burnup.png)
+* [__Retrospective__](./Documentation/Sprint1-Retrospective.md)
+
+* __Burnup Report:__ ![Sprint1-Burnup](./Documentation/Sprint1-Burnup.png)
+
+* __Contributions__
+
+   * __Caden__ : Established a route that communicates with Spotify API, and implemented spotify token refresh (so end user needs to manually verify as little as possible).
+      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
+   * __Devin__ : 
+      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
+   * __Jacob__ :
+      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
+   * __Leon__ : 
+      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
+   * __Mateo__ : 
+      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
+
+* __Future Implementation__
+
+   * Deploy to firebase
+
+   * Create better UI/UX
+
+   * Show other users' songs on map
+
+   * Refine pin functionality

@@ -8,7 +8,7 @@
     * We brainstormed and determined our project's development and ideal final version quickly
     * We figured out issues with BitBucket and GitKraken quickly and as a team
 
-* __Caden__ : 
+* __Caden__ : I successfully integrated with the Spotify API and helped the team become more familiar with Git.
 * __Devin__ : Something that went well for me was being able to communicate with and recieve updates from team members through Slack. 
 * __Jacob__ :
 * __Leon__ : 
@@ -19,7 +19,7 @@
 * Familiarity with each other and the tools we use. Especially using Git effectively.
 
 ## What can I do to improve?
-* __Caden__ : 
+* __Caden__ : I unintentionally complicated things when I completed part of Leon’s task, as I was relying on his code. In the future, just do my task and create a PR when it is done, 
 * __Devin__ : I need to make sure to reach out to team members to get help understanding their code (if I'm modifying/referencing it) before starting a task.
 * __Jacob__ :
 * __Leon__ : 
