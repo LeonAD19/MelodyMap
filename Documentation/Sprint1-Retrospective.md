@@ -11,8 +11,13 @@
 * __Caden__ : I successfully integrated with the Spotify API and helped the team become more familiar with Git.
 * __Devin__ : Something that went well for me was being able to communicate with and recieve updates from team members through Slack. 
 * __Jacob__ :
+<<<<<<< HEAD
 * __Leon__  : Some things that went well for me was able to learn new tools as well as getting more familiar with my team and our work flow.
 * __Mateo__ : 
+=======
+* __Leon__ : 
+* __Mateo__ : After receiving help from my teammates on how to connect VSCode with GitKraken, I was successfully able to complete all of my tasks. The main thing that didn't go well for me was connecting my VSCode to GitKraken to commit my changes. 
+
 
 
 ## What might be impending us from performing better?
@@ -22,8 +27,13 @@
 * __Caden__ : I unintentionally complicated things when I completed part of Leon’s task, as I was relying on his code. In the future, just do my task and create a PR when it is done, 
 * __Devin__ : I need to make sure to reach out to team members to get help understanding their code (if I'm modifying/referencing it) before starting a task.
 * __Jacob__ :
+<<<<<<< HEAD
 * __Leon__  : I can work on improving my ability to write clean, efficient code and ensuring clear communication with the team when tasks are completed using Git.
 * __Mateo__ : 
+=======
+* __Leon__ : 
+* __Mateo__ : I would say definitely not be afraid to ask my teammates for help/questions since I got most of my work done later than I wouldv've liked because I was hesistant to ask them for help. When I did, things went really well for me. In the future, I need to improve on asking them for help if I need it.
+>>>>>>> 548efa0 (Here are Mateo's Edits to the files)
 
 ## AI
 ### Description of how AI (ChatGPT, Anthropic, Genesis, etc) assisted the team during the semester.

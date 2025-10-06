@@ -92,8 +92,7 @@ For this sprint our main focus was to create the website, communicate with spoti
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
    * __Leon__ : 
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
-   * __Mateo__ : 
-      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
+   * __Mateo__ : Researched and implemented the map API. Ensured map displayed current user location, can scroll, and zoom in and out of map. Also made sure user can add pins to map and the pin(s) are displayed. 
 
 * __Future Implementation__
 
