@@ -71,3 +71,35 @@ We plan to use the following technologies:
 
 6. **Nearby Listening Visibility**  
    - Allows users to see what others within a one-mile radius are listening to in real time.  
+##
+# Sprint 1 Review
+
+### Review and Retrospective
+
+For this sprint our main focus was to create the website, communicate with spotify api, and create a map.
+
+* [__Retrospective__](./Documentation/Sprint1-Retrospective.md)
+
+* __Burnup Report:__ ![Sprint1-Burnup](./Documentation/Sprint1-Burnup.png)
+
+* __Contributions__
+
+   * __Caden__ : Established a route that communicates with Spotify API, and implemented spotify token refresh (so end user needs to manually verify as little as possible).
+      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
+   * __Devin__ : Created and designed the inital homepage/website, implemented a feature to display the current song's  metadata on map pin, and display which account type has been linked.
+      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
+   * __Jacob__ : Created a barebones flask website to run locally, implemented a feature that shows error codes coming from spotify's api, and researched on how to deploy to firebase. 
+      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
+   * __Leon__ : I implemented the OAuth login and handled the OAuth callback process. I also worked with Caden to store the access token securely. In addition, I developed the OAuth request and redirect endpoints and integrated the login display into the home.html page.
+      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
+   * __Mateo__ : Researched and implemented the map API. Ensured map displayed current user location, can scroll, and zoom in and out of map. Also made sure user can add pins to map and the pin(s) are displayed. 
+
+* __Future Implementation__
+
+   * Deploy to firebase
+
+   * Create better UI/UX
+
+   * Show other users' songs on map
+
+   * Refine pin functionality
