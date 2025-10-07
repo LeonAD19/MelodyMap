@@ -90,7 +90,7 @@ For this sprint our main focus was to create the website, communicate with spoti
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
    * __Jacob__ :
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
-   * __Leon__ : 
+   * __Leon__ : I implemented the OAuth login and handled the OAuth callback process. I also worked with Caden to store the access token securely. In addition, I developed the OAuth request and redirect endpoints and integrated the login display into the home.html page.
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
    * __Mateo__ : Researched and implemented the map API. Ensured map displayed current user location, can scroll, and zoom in and out of map. Also made sure user can add pins to map and the pin(s) are displayed. 
 
