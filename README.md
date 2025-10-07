@@ -86,7 +86,7 @@ For this sprint our main focus was to create the website, communicate with spoti
 
    * __Caden__ : Established a route that communicates with Spotify API, and implemented spotify token refresh (so end user needs to manually verify as little as possible).
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
-   * __Devin__ : 
+   * __Devin__ : Created and designed the inital homepage/website, implemented a feature to display the current song's  metadata on map pin, and display which account type has been linked.
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
    * __Jacob__ :
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
