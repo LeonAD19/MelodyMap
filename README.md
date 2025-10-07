@@ -88,7 +88,7 @@ For this sprint our main focus was to create the website, communicate with spoti
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
    * __Devin__ : Created and designed the inital homepage/website, implemented a feature to display the current song's  metadata on map pin, and display which account type has been linked.
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
-   * __Jacob__ :
+   * __Jacob__ : Created a barebones flask website to run locally, implemented a feature that shows error codes coming from spotify's api, and researched on how to deploy to firebase. 
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
    * __Leon__ : I implemented the OAuth login and handled the OAuth callback process. I also worked with Caden to store the access token securely. In addition, I developed the OAuth request and redirect endpoints and integrated the login display into the home.html page.
       * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
