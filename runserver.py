@@ -15,5 +15,7 @@ from flask_folder import create_app
 
 app = create_app()
 
-if __name__ == "__main__":      # if hosted locally
-    app.run(host="127.0.0.1", port=5000, debug=True)
+# Checking to see if app is running in this file, if so run app, debug = true allows automatic reload when code changes. 
+# Remove debug = true, when project is ready to deploy.
+if __name__ == "__main__":
+    app.run(debug=True)
