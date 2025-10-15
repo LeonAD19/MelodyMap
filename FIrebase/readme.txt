@@ -2,6 +2,11 @@ In this project we will be using firebase to deploy our website.
 This readme is documentation on how to deploy our webapp.
 We will be using firebase, as it allows development on mobile and desktop applciations
 
+To get the system functional, use the following command
+'''
+gcloud run deploy melody-map   --source .   --region us-central1   --allow-unauthenticated
+'''
+
 Step 1: 
     Add firebase token and project name as variables
     By defining the two variables
