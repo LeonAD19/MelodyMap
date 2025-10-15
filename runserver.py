@@ -16,5 +16,4 @@ from flask_folder import create_app
 app = create_app()
 
 if __name__ == "__main__":      # if hosted locally
-    print("===Running locally===")
     app.run(host="127.0.0.1", port=5000, debug=True)
