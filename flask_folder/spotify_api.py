@@ -1,12 +1,6 @@
 import requests
-from flask import Blueprint, render_template, jsonify
+from flask import jsonify
 from .spotify_tokens import clear_tokens, get_access_token
-
-# ==== SPOTIFY DASHBOARD LINK ====
-# The redirect will almost definetly need to be changed
-# https://developer.spotify.com/dashboard/8fe0b36abc4744aca36f7c9bca17ef74
-
-bp = Blueprint('spotify_api', __name__, url_prefix='/spotify')
 
 SPOTIFY_ERROR_MESSAGES = {
     204: "No content - nothing is currently playing.",
@@ -20,87 +14,78 @@ SPOTIFY_ERROR_MESSAGES = {
     503: "Service Unavailable - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.",
 }
 
-# =========================
-# API CALL (business logic)
-# =========================
-# Purpose: Use the access token to call /v1/me/player/currently-playing,
-@bp.route('/now_playing')
+# Purpose: 
+# Returns details of currently playing song for authenticated Spotify User
 def now_playing():
     token = get_access_token()
+    headers = {'Authorization': f'Bearer {token}'}
+    url = 'https://api.spotify.com/v1/me/player/currently-playing'
     
-    r = requests.get(
-        'https://api.spotify.com/v1/me/player/currently-playing', 
-        headers = {'Authorization': f'Bearer {token}'}
+    # Call Spotify API and store response
+    response = requests.get(
+        url, 
+        headers=headers
     )
 
-
-    if r.status_code != 200:
-        if r.status_code in (401, 403):
-            clear_tokens()
-            return jsonify({
-            #"authorized": False,
-            "error": SPOTIFY_ERROR_MESSAGES.get(r.status_code, "Authorization error.")
-        }), r.status_code
-        else: 
-            return jsonify({
-                "error": SPOTIFY_ERROR_MESSAGES.get(r.status_code, "Authorization error.")
-        })
+    # Handle if Spotify didn’t send back a “200 OK” (meaning something went wrong):
+    if response.status_code != 200:
+        
+        if response.status_code in (401, 403):  # Authentication Error
+            clear_tokens()      # Have users send back in
             
-    payload = r.json()
-    # print(json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True))
-
-    # Safe field access to avoid KeyErrors if fields are missing
-    item = (payload.get('item') or {})
-    name = item.get('name') or 'Unknown'
-    album = item.get('album') or {}
-    album_name = album.get('name') or 'Unknown'
-    album_images = album.get('images') or []
-    album_art = album_images[0].get('url') if album_images else None    # get url from images
-    artists_list = item.get('artists') or []
-    artists = ', '.join(a.get('name', '') for a in artists_list) or 'Unknown'
-
-    # print(f'\nNow playing: {name} ({album_name}) — {artists}')
-    # print(f'Link to art: {album_art}')
+        if response.status_code == 204:     # Not playing anything
+            return jsonify({
+                "authorized": True,
+                "error": SPOTIFY_ERROR_MESSAGES.get(204)
+            }), 200     # This makes the json show 
+            
+        return jsonify({
+            "authorized": response.status_code not in (401, 403),
+            "error": SPOTIFY_ERROR_MESSAGES.get(response.status_code, "Unknown error.")
+        }), response.status_code
+         
+         
+    # Extract song details safely        
+    payload = response.json() or {}
+    item = payload.get('item', {})
     
+    album = item.get('album', {})
+    album_images = album.get('images', None)
+    artists = ', '.join(a.get('name', '') for a in item.get('artists', [])) or 'Unknown'
+
+    # Return song details
     return jsonify({
-        'authorized': True,
-        'playing': {
-            'name': name,
-            'album': album_name,
-            'artists': artists,
-            'art': album_art,
-            'is_playing': payload.get('is_playing', False),
-            'progress_ms': payload.get('progress_ms'),
-            'duration_ms': item.get('duration_ms'),
+        "authorized": True,
+        "playing": {
+            "name": item.get('name', 'Unknown'),
+            "album": album.get('name', 'Unknown'),
+            "artists": artists,
+            "art": album_images[0].get('url') if album_images else None,
+            "is_playing": payload.get('is_playing', False),
+            "progress_ms": payload.get('progress_ms'),
+            "duration_ms": item.get('duration_ms'),
         }
     })
+    
+# Purpose: Return if Authenticated Spotify User is logged in
+def is_logged_in() -> True | False:
+    import requests
+    from .spotify_tokens import clear_tokens, get_access_token
 
-# =========================
-# API CALL (business logic)
-# =========================
-# Purpose: Render the currently playing song
-@bp.route('/render_now_playing')
-def render_now_playing():
-    return render_template('render_now_playing.html')
-
-
-import requests
-from .spotify_tokens import clear_tokens, get_access_token
-
-def is_logged_in():
     token = get_access_token()
-    if not token:
+    if not token:       # If no token, then cannot be logged in
         return False
 
+    # Call Spotify API and store response
     r = requests.get(
         "https://api.spotify.com/v1/me",
         headers={"Authorization": f"Bearer {token}"}
     )
 
-    if r.status_code == 200:
+    if r.status_code == 200:        # If Spotify sends back a "200 OK" then logged in
         return True
-    elif r.status_code in (401, 403):
+    
+    if r.status_code in (401, 403):     # If bad token, then clear it
         clear_tokens()
-        return False
     
     return False

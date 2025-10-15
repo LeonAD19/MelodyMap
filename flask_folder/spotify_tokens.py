@@ -1,5 +1,7 @@
+import os
 import time
 from flask import session
+import requests
 
 # Save access/refresh/expiry to session. Only overwrite refresh if provided.
 def set_tokens(tokens: dict) -> None:
@@ -31,7 +33,6 @@ def get_access_token() -> str | None:
     if not refresh:
         return None         # Give up if there is no spotify_refresh_token
 
-    from .spotify_routes import refresh_client_token
     r = refresh_client_token(token=refresh)
     
     if r.status_code != 200:
@@ -40,3 +41,18 @@ def get_access_token() -> str | None:
     
     set_tokens(r.json())
     return session.get('spotify_access_token')
+
+# Purpose: If User's token expired, then refresh. This prevents the need to re-login.
+def refresh_client_token(token):
+    SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
+    CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
+    
+    return requests.post(
+        SPOTIFY_TOKEN_URL, 
+        data = {
+                'grant_type': 'refresh_token',
+                'refresh_token': token,
+                'client_id': CLIENT_ID,
+            }, 
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    )
