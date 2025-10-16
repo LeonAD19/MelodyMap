@@ -12,10 +12,8 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY']= os.getenv("FLASK_SECRET_KEY")
 
-    from .routes import routes
-    app.register_blueprint(routes, url_prefix = '/')
-    
-    from .spotify_api import bp as spotify_api
+    from .routes import routes, spotify_api
+    app.register_blueprint(routes)
     app.register_blueprint(spotify_api)
 
     ### Spotify OAuth Blueprint ###
