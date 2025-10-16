@@ -1,0 +1,6 @@
+{
+  "hosting": [
+    { "target": "develop",  "public": "build" },
+    { "target": "production", "public": "build" }
+  ]
+}

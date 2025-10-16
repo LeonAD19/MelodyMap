@@ -1,0 +1,16 @@
+{
+  "projects": {},
+  "targets": {
+    "melodymap-cs-3398": {
+      "hosting": {
+        "production": [
+          "melodymap-production"
+        ],
+        "develop": [
+          "melodymap-develop"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
