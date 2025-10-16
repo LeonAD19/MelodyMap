@@ -6,8 +6,8 @@ pipelines:
       - step:
           name: Deploy Flask App to Cloud Run
           script:
-            # Authenticate with Google Cloud
-            - printf '%s' "$GCLOUD_SERVICE_KEY" | base64 -d > ${HOME}/gcloud-service-key.json
+            # Authenticate with Google Cloud (store JSON directly, no base64)
+            - echo "$GCLOUD_SERVICE_KEY" > ${HOME}/gcloud-service-key.json
             - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
             - gcloud config set project melodymap-cs-3398
             # Deploy to Cloud Run
@@ -17,8 +17,8 @@ pipelines:
       - step:
           name: Deploy Flask App to Cloud Run (Production)
           script:
-            # Authenticate with Google Cloud
-            - printf '%s' "$GCLOUD_SERVICE_KEY" | base64 -d > ${HOME}/gcloud-service-key.json
+            # Authenticate with Google Cloud (store JSON directly, no base64)
+            - echo "$GCLOUD_SERVICE_KEY" > ${HOME}/gcloud-service-key.json
             - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
             - gcloud config set project melodymap-cs-3398
             # Deploy to Cloud Run
