@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+Documentation/
+
+# Firebase
+.firebase/
+Firebase/
+
+# Environment
+.env
+.sampleenv
+
+# Google Cloud credentials
+gcloud-service-key.json
+*-service-key.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log

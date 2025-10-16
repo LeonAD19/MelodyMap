@@ -1,29 +1,25 @@
-image: node:20
+image: google/cloud-sdk:alpine
 
 pipelines:
   branches:
     develop:
       - step:
-          name: Test, Build & Deploy (dev)
-          caches: [node]
+          name: Deploy Flask App to Cloud Run
           script:
-            - npm ci
-            - npm test
-            - npm run build
-            - printf '%s' "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > firebase-key.json
-            - export GOOGLE_APPLICATION_CREDENTIALS="$PWD/firebase-key.json"
-            - npm install -g firebase-tools
-            - firebase deploy --only hosting:dev --non-interactive
+            # Authenticate with Google Cloud
+            - echo $GCLOUD_SERVICE_KEY | base64 -d > ${HOME}/gcloud-service-key.json
+            - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+            - gcloud config set project melodymap-cs-3398
+            # Deploy to Cloud Run
+            - gcloud run deploy melody-map --source . --region us-central1 --allow-unauthenticated --clear-base-image
 
     main:
       - step:
-          name: Test, Build & Deploy (prod)
-          caches: [node]
+          name: Deploy Flask App to Cloud Run (Production)
           script:
-            - npm ci
-            - npm test
-            - npm run build
-            - printf '%s' "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > firebase-key.json
-            - export GOOGLE_APPLICATION_CREDENTIALS="$PWD/firebase-key.json"
-            - npm install -g firebase-tools
-            - firebase deploy --only hosting:prod --non-interactive
+            # Authenticate with Google Cloud
+            - echo $GCLOUD_SERVICE_KEY | base64 -d > ${HOME}/gcloud-service-key.json
+            - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+            - gcloud config set project melodymap-cs-3398
+            # Deploy to Cloud Run
+            - gcloud run deploy melody-map --source . --region us-central1 --allow-unauthenticated --clear-base-image
