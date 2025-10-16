@@ -2,26 +2,22 @@
 // - Scroll, click, and zoom enabled.
 // - Attempts to center on user's location; falls back to Texas State vicinity if denied/unavailable.
 // - Prior work referenced: MM-44 (map API), MM-45 (fallback + click pins), MM-57 (geolocation centering).
+// Melody Map — fixed version with reliable "You are here" pin
 
-(function () {
-  // ---------------------------
-  // Map setup
-  // ---------------------------
+document.addEventListener("DOMContentLoaded", function () {
   const map = L.map("map");
 
-  // OSM tile layer (free, attribution required)
+  // OSM tiles
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
-
+  
   // Fallback center (Texas State vicinity)
   const fallback = { lat: 29.888, lng: -97.941, zoom: 14 };
 
-  // ---------------------------
-  // Geolocation centering (MM-57)
-  // ---------------------------
+  // --- Geolocation ---
   function centerMap() {
     if (!navigator.geolocation) {
       map.setView([fallback.lat, fallback.lng], fallback.zoom);
@@ -31,14 +27,10 @@
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { latitude, longitude } = pos.coords;
-
-        // Center on user
         map.setView([latitude, longitude], 15);
 
-        // Visual 1-mile radius around user
+        // Show 1-mile radius + marker
         L.circle([latitude, longitude], { radius: 1609.34 }).addTo(map);
-
-        // Marker at user's approximate location
         L.marker([latitude, longitude])
           .addTo(map)
           .bindPopup("<b>You are here</b>")
@@ -52,29 +44,21 @@
     );
   }
 
-  // ---------------------------
-  // Click-to-drop pins + now playing (MM-45)
-  // ---------------------------
+  // --- Click to drop pins ---
   map.on("click", async (e) => {
     const { lat, lng } = e.latlng;
-
     try {
-      // Fetch HTML snippet for current track (server returns HTML, not JSON)
       const res = await fetch("/spotify/now_playing?_" + Date.now());
       const html = await res.text();
-
       L.marker([lat, lng])
         .addTo(map)
         .bindPopup(
-          `
-          <div style="max-width:250px;">
-            ${html}
-            <br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>
-          </div>
-        `
+          `<div style="max-width:250px;">
+            ${html}<br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>
+          </div>`
         )
         .openPopup();
-    } catch (_err) {
+    } catch {
       L.marker([lat, lng])
         .addTo(map)
         .bindPopup("<b>Could not load song info</b>")
@@ -82,7 +66,7 @@
     }
   });
 
-  // ---------------------------
+    // ---------------------------
   // Lazy refetch hook (placeholder for backend integration)
   // ---------------------------
   let refetchTimer = null;
@@ -98,5 +82,7 @@
   });
 
   // Initialize
+
+
   centerMap();
-})();
+});

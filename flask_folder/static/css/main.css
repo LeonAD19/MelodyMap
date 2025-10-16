@@ -7,13 +7,12 @@ body {
 }
 
 /* Create dark grey header with a white logo */
-
 header {
   background-color: #2B2B2B;
-  display: flex;          /* lets you align items */
-  align-items: center;    /* vertically center */
-  justify-content: flex-start; /* push content to the left */
-  height: 60px;           /* adjust to your header size */
+  display: flex;          
+  align-items: center;    
+  justify-content: flex-start; 
+  height: 60px;         
   padding: 0 15px
 }
 
@@ -172,7 +171,7 @@ form input#submit:hover{
 /* Melody Map additions */
 #map {
   width: 100%;
-  height: 70vh;        /* adjust if you want it taller/shorter */
+  height: 500px;        
   border-radius: 10px;
 }
 
