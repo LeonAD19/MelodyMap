@@ -62,3 +62,6 @@ __pycache__/
 
 .DS_Store
 
+firebase-key.json
+.firebase/
+firebase.caches
