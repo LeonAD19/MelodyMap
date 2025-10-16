@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "melodymap-cs-3398"
+  },
+  "targets": {
+    "melodymap-cs-3398": {
+      "hosting": {
+        "dev": [
+          "melodymap-develop"
+        ],
+        "prod": [
+          "melodymap-produdction"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
