@@ -6,20 +6,29 @@ pipelines:
       - step:
           name: Deploy Flask App to Cloud Run
           script:
-            # Authenticate with Google Cloud (store JSON directly, no base64)
-            - echo "$GCLOUD_SERVICE_KEY" > ${HOME}/gcloud-service-key.json
-            - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+            - set -euo pipefail
+            # Write the JSON key file safely
+            - printf '%s' "$GCLOUD_SERVICE_KEY" | tr -d '\r' > "$HOME/gcloud-service-key.json"
+            - '[ -s "$HOME/gcloud-service-key.json" ] || { echo "Key file is empty"; exit 1; }'
+            - 'head -c 1 "$HOME/gcloud-service-key.json" | od -An -t x1 | grep -qi "7b" || { echo "Key does not start with {"; exit 1; }'
+            # Authenticate & configure gcloud
+            - gcloud auth activate-service-account --key-file "$HOME/gcloud-service-key.json"
             - gcloud config set project melodymap-cs-3398
+            - gcloud config set run/region us-central1
             # Deploy to Cloud Run
-            - gcloud run deploy melody-map --source . --region us-central1 --allow-unauthenticated --clear-base-image
+            - gcloud run deploy melody-map --source . --allow-unauthenticated --clear-base-image
 
     main:
       - step:
           name: Deploy Flask App to Cloud Run (Production)
           script:
-            # Authenticate with Google Cloud (store JSON directly, no base64)
-            - echo "$GCLOUD_SERVICE_KEY" > ${HOME}/gcloud-service-key.json
-            - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+            - set -euo pipefail
+            # Write the JSON key file safely
+            - printf '%s' "$GCLOUD_SERVICE_KEY" | tr -d '\r' > "$HOME/gcloud-service-key.json"
+            - '[ -s "$HOME/gcloud-service-key.json" ] || { echo "Key file is empty"; exit 1; }'
+            - 'head -c 1 "$HOME/gcloud-service-key.json" | od -An -t x1 | grep -qi "7b" || { echo "Key does not start with {"; exit 1; }'
+            # Authenticate & configure gcloud
+            - gcloud auth activate-service-account --key-file "$HOME/gcloud-service-key.json"
             - gcloud config set project melodymap-cs-3398
+            - gcloud config set run/region us-central1
             # Deploy to Cloud Run
-            - gcloud run deploy melody-map --source . --region us-central1 --allow-unauthenticated --clear-base-image
