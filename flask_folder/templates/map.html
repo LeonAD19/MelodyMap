@@ -1,23 +1,37 @@
-{% extends "layout.html" %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>Melody Map</title>
 
-{% block content %}
-  <!-- 
-    Melody Map: Main Map Page
-    - Displays OpenStreetMap tiles
-    - Uses browser geolocation (with permission)
-    - Allows user to click and drop markers
-  -->
-  <div class="topbar">
-    <span class="pill">Tiles: OpenStreetMap</span>
-    <span class="pill">Geolocation: On (with permission)</span>
-    <span class="pill">Click map to drop a marker</span>
-  </div>
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
-  <!-- Map container (Leaflet initializes here) -->
-  <div id="map" aria-label="Melody Map"></div>
-{% endblock %}
 
-{% block scripts %}
-  <!-- Map logic (Leaflet + geolocation + click events) -->
-  <script src="{{ url_for('static', filename='js/map.js') }}"></script>
-{% endblock %}
+  </head>
+
+  <body>
+    <div class="topbar">
+      <span class="pill">Tiles: OpenStreetMap</span>
+      <span class="pill">Geolocation: On (with permission)</span>
+      <span class="pill">Click map to drop a marker</span>
+    </div>
+
+    <!-- Map container -->
+    <div id="map" aria-label="Melody Map"></div>
+
+    <!-- Leaflet JS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <!-- Your map logic -->
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+  </body>
+</html>

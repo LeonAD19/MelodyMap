@@ -1,36 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Flask App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-  crossorigin=""
-/>
-  </head>
-  <body>
-  <header>
-    <!--Displays the spotify icon only IF the user is successfully logged in-->
-    <div class="loggedIn">
-      {% if user_auth %}
-      <img src="{{ url_for('static', filename='spotifylogo.png') }}" alt="Spotify Logo">
-      {% endif %}
+    <meta charset="utf-8" />
+    <title>Melody Map</title>
 
-    </div>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+  </head>
+
+  <body>
+    <header>
+      <div class="loggedIn">
+        {% if user_auth %}
+          <img src="{{ url_for('static', filename='spotifylogo.png') }}" alt="Spotify Logo" />
+        {% endif %}
+      </div>
+
+      <div class="container">
+        <h1 class="logo">Melody Map</h1>
+        <nav>
+          <ul class="menu">
+            <li><a href="{{ url_for('routes.home') }}">Home</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
     <div class="container">
-      <h1 class="logo">Melody Map</h1>
-      <nav>
-        <ul class="menu">
-          <li><a href="{{ url_for('routes.home') }}">Home</a></li>
-          <li><a href="{{ url_for('spotify_api.render_now_playing') }}">Now Playing</a></li>
-          <!-- Leaflet Map Link-->
-          <li><a href="{{ url_for('routes.map_page') }}">Map</a></li>
-        </ul>
-      </nav>
+      {% block content %}{% endblock %}
     </div>
-  </header>
 
     <div class="container">
       {% block content %}
