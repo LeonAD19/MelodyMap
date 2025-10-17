@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+Documentation/
+
+# Environment
+.env
+.sampleenv
+
+# Google Cloud (using keyless OIDC authentication)
+# Keep wif_config.json for Workload Identity Federation
+!wif_config.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log

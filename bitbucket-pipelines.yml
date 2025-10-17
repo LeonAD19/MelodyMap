@@ -1,29 +1,29 @@
-image: node:20
+image: google/cloud-sdk:alpine
+
+options:
+  size: 2x
+
+definitions:
+  scripts:
+    - &deploy-script |
+      echo "$BITBUCKET_STEP_OIDC_TOKEN" > ./bb-oidc-token
+      sed "s|\"file\": *\"[^\"]*\"|\"file\": \"$(pwd)/bb-oidc-token\"|g" wif_config.json > ./wif.json
+      gcloud auth login --cred-file=./wif.json
+      gcloud run deploy "$SERVICE" --source . --project melodymap-cs-3398 --region us-central1 --allow-unauthenticated --quiet
 
 pipelines:
   branches:
     develop:
       - step:
-          name: Test, Build & Deploy (dev)
-          caches: [node]
+          name: Deploy to Cloud Run (dev)
+          oidc: true
           script:
-            - npm ci
-            - npm test
-            - npm run build
-            - printf '%s' "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > firebase-key.json
-            - export GOOGLE_APPLICATION_CREDENTIALS="$PWD/firebase-key.json"
-            - npm install -g firebase-tools
-            - firebase deploy --only hosting:dev --non-interactive
-
+            - export SERVICE=melody-map-dev
+            - *deploy-script
     main:
       - step:
-          name: Test, Build & Deploy (prod)
-          caches: [node]
+          name: Deploy to Cloud Run (prod)
+          oidc: true
           script:
-            - npm ci
-            - npm test
-            - npm run build
-            - printf '%s' "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > firebase-key.json
-            - export GOOGLE_APPLICATION_CREDENTIALS="$PWD/firebase-key.json"
-            - npm install -g firebase-tools
-            - firebase deploy --only hosting:prod --non-interactive
+            - export SERVICE=melody-map
+            - *deploy-script
