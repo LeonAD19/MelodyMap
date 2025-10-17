@@ -61,8 +61,3 @@ venv/
 __pycache__/
 
 .DS_Store
-
-# Google Cloud credentials
-gcloud-service-key.json
-*-service-key.json
-
