@@ -11,6 +11,7 @@ def set_tokens(tokens: dict) -> None:
     if tokens.get('refresh_token'):
         session['spotify_refresh_token'] = tokens['refresh_token']
 
+    # Calculate token expiration time (subtract 30 sec for safety)
     expires_in = int(tokens.get('expires_in', 3600))
     session['spotify_expires_at'] = int(time.time()) + expires_in - 30  # safety margin
 
@@ -32,13 +33,15 @@ def get_access_token() -> str | None:
     refresh = session.get('spotify_refresh_token')
     if not refresh:
         return None         # Give up if there is no spotify_refresh_token
-
+    
+    # Try refreshing the token using Spotify API
     r = refresh_client_token(token=refresh)
     
     if r.status_code != 200:
-        clear_tokens()
+        clear_tokens()      # Reset session if refresh fails
         return None
     
+    # Save new tokens and return the new access token
     set_tokens(r.json())
     return session.get('spotify_access_token')
 
@@ -47,6 +50,7 @@ def refresh_client_token(token):
     SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
     CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
     
+    # Send request to refresh the token
     return requests.post(
         SPOTIFY_TOKEN_URL, 
         data = {
