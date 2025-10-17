@@ -15,6 +15,8 @@ pipelines:
             - REGION="us-central1"
             - SERVICE="melody-map"
             - echo "$BITBUCKET_STEP_OIDC_TOKEN" > /tmp/bb-oidc-token
+            - "[ -s /tmp/bb-oidc-token ] || { echo 'OIDC token missing (enable oidc: true on this step)'; exit 1; }"
+            - "awk -F. '{print NF}' /tmp/bb-oidc-token | grep -qx 3 || { echo 'Token not a JWT (three segments)'; exit 1; }"
             - test -f wif_config.json || { echo "wif_config.json missing at repo root"; exit 1; }
             - "sed -e 's#\\\"file\\\": *\\\".*\\\"#\\\"file\\\": \\\"/tmp/bb-oidc-token\\\"#g' wif_config.json > /tmp/wif.json"
             - "grep -q '\"file\": \"/tmp/bb-oidc-token\"' /tmp/wif.json || { echo 'Failed to patch credential_source.file'; exit 1; }"
@@ -32,6 +34,8 @@ pipelines:
             - REGION="us-central1"
             - SERVICE="melody-map"
             - echo "$BITBUCKET_STEP_OIDC_TOKEN" > /tmp/bb-oidc-token
+            - "[ -s /tmp/bb-oidc-token ] || { echo 'OIDC token missing (enable oidc: true on this step)'; exit 1; }"
+            - "awk -F. '{print NF}' /tmp/bb-oidc-token | grep -qx 3 || { echo 'Token not a JWT (three segments)'; exit 1; }"
             - test -f wif_config.json || { echo "wif_config.json missing at repo root"; exit 1; }
             - "sed -e 's|\"file\": *\".*\"|\"file\": \"/tmp/bb-oidc-token\"|g' wif_config.json > /tmp/wif.json"
             - "grep -q '\"file\": \"/tmp/bb-oidc-token\"' /tmp/wif.json || { echo 'Failed to patch credential_source.file'; exit 1; }"
