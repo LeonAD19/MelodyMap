@@ -1,34 +1,41 @@
 image: google/cloud-sdk:alpine
 
+options:
+  size: 2x
+
 pipelines:
   branches:
     develop:
       - step:
-          name: Deploy Flask App to Cloud Run
+          name: Deploy to Cloud Run (dev)
+          oidc: true
           script:
             - set -euo pipefail
-            # Write the JSON key file safely
-            - printf '%s' "$GCLOUD_SERVICE_KEY" | tr -d '\r' > "$HOME/gcloud-service-key.json"
-            - '[ -s "$HOME/gcloud-service-key.json" ] || { echo "Key file is empty"; exit 1; }'
-            - 'head -c 1 "$HOME/gcloud-service-key.json" | od -An -t x1 | grep -qi "7b" || { echo "Key does not start with {"; exit 1; }'
-            # Authenticate & configure gcloud
-            - gcloud auth activate-service-account --key-file "$HOME/gcloud-service-key.json"
-            - gcloud config set project melodymap-cs-3398
-            - gcloud config set run/region us-central1
-            # Deploy to Cloud Run
-            - gcloud run deploy melody-map --source . --allow-unauthenticated --clear-base-image
-
+            - PROJECT_ID="melodymap-cs-3398"
+            - REGION="us-central1"
+            - SERVICE="melody-map"
+            - echo "$BITBUCKET_STEP_OIDC_TOKEN" > /tmp/bb-oidc-token
+            - test -f wif_config.json || { echo "wif_config.json missing at repo root"; exit 1; }
+            - "sed -e 's#\\\"file\\\": *\\\".*\\\"#\\\"file\\\": \\\"/tmp/bb-oidc-token\\\"#g' wif_config.json > /tmp/wif.json"
+            - "grep -q '\"file\": \"/tmp/bb-oidc-token\"' /tmp/wif.json || { echo 'Failed to patch credential_source.file'; exit 1; }"
+            - gcloud auth login --cred-file=/tmp/wif.json --brief
+            - gcloud config set project "$PROJECT_ID"
+            - gcloud config set run/region "$REGION"
+            - gcloud run deploy "$SERVICE" --source . --allow-unauthenticated --quiet
     main:
       - step:
-          name: Deploy Flask App to Cloud Run (Production)
+          name: Deploy to Cloud Run (prod)
+          oidc: true
           script:
             - set -euo pipefail
-            # Write the JSON key file safely
-            - printf '%s' "$GCLOUD_SERVICE_KEY" | tr -d '\r' > "$HOME/gcloud-service-key.json"
-            - '[ -s "$HOME/gcloud-service-key.json" ] || { echo "Key file is empty"; exit 1; }'
-            - 'head -c 1 "$HOME/gcloud-service-key.json" | od -An -t x1 | grep -qi "7b" || { echo "Key does not start with {"; exit 1; }'
-            # Authenticate & configure gcloud
-            - gcloud auth activate-service-account --key-file "$HOME/gcloud-service-key.json"
-            - gcloud config set project melodymap-cs-3398
-            - gcloud config set run/region us-central1
-            # Deploy to Cloud Run
+            - PROJECT_ID="melodymap-cs-3398"
+            - REGION="us-central1"
+            - SERVICE="melody-map"
+            - echo "$BITBUCKET_STEP_OIDC_TOKEN" > /tmp/bb-oidc-token
+            - test -f wif_config.json || { echo "wif_config.json missing at repo root"; exit 1; }
+            - "sed -e 's|\"file\": *\".*\"|\"file\": \"/tmp/bb-oidc-token\"|g' wif_config.json > /tmp/wif.json"
+            - "grep -q '\"file\": \"/tmp/bb-oidc-token\"' /tmp/wif.json || { echo 'Failed to patch credential_source.file'; exit 1; }"
+            - gcloud auth login --cred-file=/tmp/wif.json --brief
+            - gcloud config set project "$PROJECT_ID"
+            - gcloud config set run/region "$REGION"
+            - gcloud run deploy "$SERVICE" --source . --allow-unauthenticated --quiet
