@@ -1,18 +1,7 @@
 import requests
 from flask import jsonify
 from .spotify_tokens import clear_tokens, get_access_token
-
-SPOTIFY_ERROR_MESSAGES = {
-    204: "No content - nothing is currently playing.",
-    400: "Bad request - check your request parameters.",
-    401: "Unauthorized - your token may be invalid or expired.",
-    403: "Forbidden - you don’t have permission to access this resource.",
-    404: "Not found - the resource doesn’t exist.",
-    429: "Too many requests - you are being rate limited.",
-    500: "Internal Server Error - Spotify had an issue.",
-    502: "Bad Gateway - The server was acting as a gateway or proxy and received an invalid response from the upstream server.",
-    503: "Service Unavailable - The server is currently unable to handle the request due to a temporary condition which will be alleviated after some delay. You can choose to resend the request again.",
-}
+from .spotify_errors import SPOTIFY_ERROR_MESSAGES
 
 # Purpose: 
 # Returns details of currently playing song for authenticated Spotify User
@@ -27,7 +16,7 @@ def now_playing():
         headers=headers
     )
 
-    # Handle if Spotify didn’t send back a “200 OK” (meaning something went wrong):
+    # Handle if Spotify didnt send back a "200 OK" (meaning something went wrong):
     if response.status_code != 200:
         
         if response.status_code in (401, 403):  # Authentication Error
@@ -89,3 +78,4 @@ def is_logged_in() -> True | False:
         clear_tokens()
     
     return False
+
