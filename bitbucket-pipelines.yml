@@ -14,13 +14,14 @@ pipelines:
             - PROJECT_ID="melodymap-cs-3398"
             - REGION="us-central1"
             - SERVICE="melody-map"
-            - echo "$BITBUCKET_STEP_OIDC_TOKEN" > /tmp/bb-oidc-token
-            - "[ -s /tmp/bb-oidc-token ] || { echo 'OIDC token missing (enable oidc: true on this step)'; exit 1; }"
-            - "awk -F. '{print NF}' /tmp/bb-oidc-token | grep -qx 3 || { echo 'Token not a JWT (three segments)'; exit 1; }"
+            - echo "$BITBUCKET_STEP_OIDC_TOKEN" > ./bb-oidc-token
+            - "[ -s ./bb-oidc-token ] || { echo 'OIDC token missing (enable oidc: true on this step)'; exit 1; }"
+            - "awk -F. '{print NF}' ./bb-oidc-token | grep -qx 3 || { echo 'Token not a JWT (three segments)'; exit 1; }"
             - test -f wif_config.json || { echo "wif_config.json missing at repo root"; exit 1; }
-            - "sed -e 's#\\\"file\\\": *\\\".*\\\"#\\\"file\\\": \\\"/tmp/bb-oidc-token\\\"#g' wif_config.json > /tmp/wif.json"
-            - "grep -q '\"file\": \"/tmp/bb-oidc-token\"' /tmp/wif.json || { echo 'Failed to patch credential_source.file'; exit 1; }"
-            - gcloud auth login --cred-file=/tmp/wif.json --brief
+            - TOKEN_PATH="$(pwd)/bb-oidc-token"
+            - "sed \"s|\\\"file\\\": *\\\"[^\\\"]*\\\"|\\\"file\\\": \\\"$TOKEN_PATH\\\"|g\" wif_config.json > ./wif.json"
+            - "grep -q \"\\\"file\\\": \\\"$TOKEN_PATH\\\"\" ./wif.json || { echo 'Failed to patch credential_source.file'; exit 1; }"
+            - gcloud auth login --cred-file=./wif.json --brief
             - gcloud config set project "$PROJECT_ID"
             - gcloud config set run/region "$REGION"
             - gcloud run deploy "$SERVICE" --source . --allow-unauthenticated --quiet
@@ -33,13 +34,14 @@ pipelines:
             - PROJECT_ID="melodymap-cs-3398"
             - REGION="us-central1"
             - SERVICE="melody-map"
-            - echo "$BITBUCKET_STEP_OIDC_TOKEN" > /tmp/bb-oidc-token
-            - "[ -s /tmp/bb-oidc-token ] || { echo 'OIDC token missing (enable oidc: true on this step)'; exit 1; }"
-            - "awk -F. '{print NF}' /tmp/bb-oidc-token | grep -qx 3 || { echo 'Token not a JWT (three segments)'; exit 1; }"
+            - echo "$BITBUCKET_STEP_OIDC_TOKEN" > ./bb-oidc-token
+            - "[ -s ./bb-oidc-token ] || { echo 'OIDC token missing (enable oidc: true on this step)'; exit 1; }"
+            - "awk -F. '{print NF}' ./bb-oidc-token | grep -qx 3 || { echo 'Token not a JWT (three segments)'; exit 1; }"
             - test -f wif_config.json || { echo "wif_config.json missing at repo root"; exit 1; }
-            - "sed -e 's|\"file\": *\".*\"|\"file\": \"/tmp/bb-oidc-token\"|g' wif_config.json > /tmp/wif.json"
-            - "grep -q '\"file\": \"/tmp/bb-oidc-token\"' /tmp/wif.json || { echo 'Failed to patch credential_source.file'; exit 1; }"
-            - gcloud auth login --cred-file=/tmp/wif.json --brief
+            - TOKEN_PATH="$(pwd)/bb-oidc-token"
+            - "sed \"s|\\\"file\\\": *\\\"[^\\\"]*\\\"|\\\"file\\\": \\\"$TOKEN_PATH\\\"|g\" wif_config.json > ./wif.json"
+            - "grep -q \"\\\"file\\\": \\\"$TOKEN_PATH\\\"\" ./wif.json || { echo 'Failed to patch credential_source.file'; exit 1; }"
+            - gcloud auth login --cred-file=./wif.json --brief
             - gcloud config set project "$PROJECT_ID"
             - gcloud config set run/region "$REGION"
             - gcloud run deploy "$SERVICE" --source . --allow-unauthenticated --quiet
