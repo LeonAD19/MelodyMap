@@ -16,7 +16,7 @@ def now_playing():
         headers=headers
     )
 
-    # Handle if Spotify didn’t send back a “200 OK” (meaning something went wrong):
+    # Handle if Spotify didnt send back a "200 OK" (meaning something went wrong):
     if response.status_code != 200:
         
         if response.status_code in (401, 403):  # Authentication Error
@@ -78,3 +78,4 @@ def is_logged_in() -> True | False:
         clear_tokens()
     
     return False
+
