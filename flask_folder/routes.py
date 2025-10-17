@@ -8,7 +8,7 @@ spotify_api = Blueprint('spotify_api', __name__, url_prefix='/spotify')
 
 @routes.route('/' )
 def home():
-    from .spotify_api import is_logged_in
+    from .spotify.spotify_api import is_logged_in
     user_auth = is_logged_in()
 
     return render_template("home.html", user_auth=user_auth)
@@ -20,7 +20,7 @@ def map_page():
 
 @spotify_api.route('/now_playing')
 def now_playing():
-    from .spotify_api import now_playing
+    from .spotify.spotify_api import now_playing
     return now_playing()
 
 # Purpose: Render the currently playing song
