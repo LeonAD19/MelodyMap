@@ -22,17 +22,13 @@ env/
 *.md
 Documentation/
 
-# Firebase
-.firebase/
-Firebase/
-
 # Environment
 .env
 .sampleenv
 
-# Google Cloud credentials
-gcloud-service-key.json
-*-service-key.json
+# Google Cloud (using keyless OIDC authentication)
+# Keep wif_config.json for Workload Identity Federation
+!wif_config.json
 
 # OS
 .DS_Store

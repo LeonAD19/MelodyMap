@@ -13,7 +13,7 @@ pipelines:
             - set -euo pipefail
             - PROJECT_ID="melodymap-cs-3398"
             - REGION="us-central1"
-            - SERVICE="melody-map"
+            - SERVICE="melody-map-dev"
             - echo "$BITBUCKET_STEP_OIDC_TOKEN" > ./bb-oidc-token
             - "[ -s ./bb-oidc-token ] || { echo 'OIDC token missing (enable oidc: true on this step)'; exit 1; }"
             - "awk -F. '{print NF}' ./bb-oidc-token | grep -qx 3 || { echo 'Token not a JWT (three segments)'; exit 1; }"
