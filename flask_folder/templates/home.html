@@ -1,11 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <!-- Map background -->
-  <div id="map"></div>
-
-  <!-- Overlay elements -->
-  <div class="overlay">
+  <div class="jumbo">
     <a href="{{ url_for('spotify_bp.login') }}" class="btn btn-success">Login with Spotify</a>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -15,6 +11,9 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
+
+    {% include "map.html" %}
+    
   </div>
 {% endblock %}
 
