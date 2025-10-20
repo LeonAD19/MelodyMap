@@ -6,7 +6,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   const map = L.map("map");
-
   // OSM tiles
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
@@ -16,14 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
   
   // Fallback center (Texas State vicinity)
   const fallback = { lat: 29.888, lng: -97.941, zoom: 14 };
-
   // --- Geolocation ---
   function centerMap() {
     if (!navigator.geolocation) {
       map.setView([fallback.lat, fallback.lng], fallback.zoom);
       return;
     }
-
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { latitude, longitude } = pos.coords;
@@ -43,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
       { enableHighAccuracy: true, timeout: 6000 }
     );
   }
-
   // --- Click to drop pins ---
   map.on("click", async (e) => {
     const { lat, lng } = e.latlng;
@@ -65,8 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .openPopup();
     }
   });
-
-    // ---------------------------
+  // ---------------------------
   // Lazy refetch hook (placeholder for backend integration)
   // ---------------------------
   let refetchTimer = null;
@@ -80,9 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
       //   .then(({ pins }) => { /* upsert markers */ });
     }, 350);
   });
-
   // Initialize
-
-
   centerMap();
 });
