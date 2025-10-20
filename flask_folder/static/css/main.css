@@ -6,7 +6,6 @@ body {
   color: #444;
 }
 
-/* Create dark grey header with a white logo */
 header {
   background-color: #2B2B2B;
   display: flex;          
@@ -35,8 +34,6 @@ header h1.logo:hover {
   color: #fff;
   text-decoration: none;
 }
-
-/* Center the body content */
 
 .container {
   width: 1100px;
@@ -73,8 +70,6 @@ h3 {
   color: #999;
 }
 
-/* Display navigation links inline */
-
 .menu {
   float: right;
   margin-top: 8px;
@@ -93,14 +88,12 @@ h3 {
   text-decoration: none;
 }
 
-/* Contact form */
 form label {
   font-size: 1.2em;
   font-weight: bold;
   display: block;
   padding: 10px 0;
 }
-
 
 form input#name,
 form input#email,
@@ -167,7 +160,6 @@ form input#submit:hover{
   width: 400px;
 }
 
-
 /* Melody Map additions */
 #map {
   width: 100%;
@@ -189,6 +181,11 @@ form input#submit:hover{
   border-radius: 999px;
   font-size: .9rem;
 }
+
+html, body {
+  height: 100%;
+}
+
 
 html, body {
   height: 100%;
