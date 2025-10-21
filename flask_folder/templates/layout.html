@@ -5,6 +5,8 @@
     <title>Melody Map</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -14,7 +16,14 @@
   </head>
 
   <body>
-    <header>
+    <header class="topbar">
+      <div id="header-user" class="header-user">
+        <img id="header-pic" class="header-pic" src="{{ url_for('static', filename='img/default-avatar.png') }}" alt="profile">
+        <div class="header-info">
+          <div id="header-name" class="header-name">Spotify User</div>
+        </div>
+      </div>
+      
       <div class="loggedIn">
         {% if user_auth %}
           <img src="{{ url_for('static', filename='spotifylogo.png') }}" alt="Spotify Logo" />
@@ -34,6 +43,10 @@
     <div class="container">
       {% block content %}{% endblock %}
     </div>
+    
+    <!-- Header script (loads profile once) -->
+<script src="{{ url_for('static', filename='js/topbar.js') }}"></script>
+
 <!--Leaflet JS-->
 <script
   src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
