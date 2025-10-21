@@ -1,0 +1,38 @@
+/* Topbar / header user UI */
+.topbar .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* user display */
+.header-user {
+  display: none;
+  position: static;          
+  margin: 0;                   
+  align-items: center;
+  gap: 10px;
+}
+
+.header-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 60%;
+  object-fit: cover;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+}
+
+.header-name {
+  font-weight: 800;
+  font-size: 16px;
+  position: relative;
+  top: 2px;
+  color: #111;
+}
