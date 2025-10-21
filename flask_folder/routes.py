@@ -27,3 +27,9 @@ def now_playing():
 @spotify_api.route('/render_now_playing')
 def render_now_playing():
     return render_template('render_now_playing.html')
+
+# Returns the logged-in user's profile (display name + avatar)
+@spotify_api.route('/profile')
+def profile_route():
+    from .spotify.spotify_api import get_profile
+    return get_profile()
