@@ -6,14 +6,12 @@ body {
   color: #444;
 }
 
-/* Create dark grey header with a white logo */
-
 header {
   background-color: #2B2B2B;
-  display: flex;          /* lets you align items */
-  align-items: center;    /* vertically center */
-  justify-content: flex-start; /* push content to the left */
-  height: 60px;           /* adjust to your header size */
+  display: flex;          
+  align-items: center;    
+  justify-content: flex-start; 
+  height: 60px;         
   padding: 0 15px
 }
 
@@ -36,8 +34,6 @@ header h1.logo:hover {
   color: #fff;
   text-decoration: none;
 }
-
-/* Center the body content */
 
 .container {
   width: 1100px;
@@ -74,8 +70,6 @@ h3 {
   color: #999;
 }
 
-/* Display navigation links inline */
-
 .menu {
   float: right;
   margin-top: 8px;
@@ -94,14 +88,12 @@ h3 {
   text-decoration: none;
 }
 
-/* Contact form */
 form label {
   font-size: 1.2em;
   font-weight: bold;
   display: block;
   padding: 10px 0;
 }
-
 
 form input#name,
 form input#email,
@@ -168,11 +160,10 @@ form input#submit:hover{
   width: 400px;
 }
 
-
 /* Melody Map additions */
 #map {
   width: 100%;
-  height: 70vh;        /* adjust if you want it taller/shorter */
+  height: 500px;        
   border-radius: 10px;
 }
 
@@ -189,4 +180,81 @@ form input#submit:hover{
   border: 1px solid #ddd;
   border-radius: 999px;
   font-size: .9rem;
+}
+
+html, body {
+  height: 100%;
+}
+
+
+html, body {
+  height: 100%;
+}
+
+/* Make header stay on top */
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(43, 43, 43, 0.9); /* slightly transparent */
+}
+
+/* Make the main content area fill remaining space */
+main.main-content {
+  position: relative;
+  height: 100vh; /* full viewport height */
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Make map fill the entire viewport */
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 0; /* remove rounded corners for full screen */
+  z-index: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 80px;
+  left: 8%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1001;
+}
+
+.btn-success {
+  background-color: #1db954;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: background-color 0.2s;
+}
+
+.btn-success:hover {
+  background-color: #1ed760;
+}
+
+
+.alert {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.leaflet-top.leaflet-left {
+  top: 100px; /* push down below your header (adjust this value) */
+  left: 20px; /* optional horizontal offset */
 }
