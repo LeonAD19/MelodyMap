@@ -1,7 +1,38 @@
 import requests
-from flask import jsonify
+from flask import jsonify,url_for
 from .spotify_tokens import clear_tokens, get_access_token
 from .spotify_errors import SPOTIFY_ERROR_MESSAGES
+
+# Get the logged-in user's Spotify profile
+def get_profile():
+    # Get access token; if none, user not logged in
+    token = get_access_token()
+    if not token:
+        return jsonify({"error": "Not logged in"}), 401
+
+    # Call Spotify API to get user profile
+    headers = {"Authorization": f"Bearer {token}"}
+    r = requests.get("https://api.spotify.com/v1/me", headers=headers, timeout=10)
+
+    # If Spotify says its bad, clear local tokens and force re-login
+    if r.status_code in (401, 403):
+        clear_tokens()
+        return jsonify({"error": SPOTIFY_ERROR_MESSAGES.get(r.status_code, "Auth error")}), 401
+    
+    # If any other error, return it as closed
+    if r.status_code != 200:
+        return jsonify({"error": "Spotify unavailable"}), 503
+
+    # Build profile response, stable payload for the header UI
+    data = r.json() or {}
+    username = data.get("display_name") or data.get("id") or "Spotify User"
+    images = data.get("images", []) or []
+    profile_pic = images[0].get("url") if images else url_for('static', filename='img/default-avatar.png')
+
+    # Disable caching for profile response so stale profile isnt used
+    resp = jsonify({"username": username, "profile_pic": profile_pic})
+    resp.headers["Cache-Control"] = "no-store"
+    return resp, 200
 
 # Purpose: 
 # Returns details of currently playing song for authenticated Spotify User
