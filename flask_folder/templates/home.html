@@ -5,11 +5,6 @@
   <div id="map"></div>
   <!-- Overlay elements -->
   <div class="overlay">
-    {% if not user_auth %}
-      <a href="{{ url_for('spotify_bp.login') }}" class="btn btn-success">Login with Spotify</a>
-    {% else %}
-      <a href="{{ url_for('spotify_bp.logout') }}" class="btn btn-outline-danger">Logout</a>
-    {% endif %}
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
@@ -18,7 +13,31 @@
       {% endif %}
     {% endwith %}
   </div>
+  
+  <!-- Bottom-left player overlay -->
+  <div id="player-card" class="player-card" aria-live="polite" aria-atomic="true">
+    <div class="player-body">
+      <img id="player-art" class="player-art" src="" alt="Album art" />
+      <div class="player-info">
+        <div class="player-user" id="player-user">Not logged in</div>
+        <div class="player-title" id="player-title">Not playing</div>
+        <div class="player-artists" id="player-artists"></div>
+        <div class="player-progress">
+          <div class="player-progress-bar">
+            <div class="player-progress-fill" id="player-progress-fill" style="width:0%"></div>
+          </div>
+          <div class="player-times">
+            <span id="player-current">0:00</span>
+            <span id="player-duration">0:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block scripts %}
+  <script>
+    window.SPOTIFY_AUTH = {{ 'true' if user_auth else 'false' }};
+  </script>
   <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 {% endblock %}
