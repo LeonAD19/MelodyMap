@@ -79,4 +79,11 @@ def callback():
     # Notify user that login succeeded
     flash("Login successful!", "success")
     return redirect(url_for('routes.home'))
-    
+
+@spotify_bp.route('/logout')
+def logout():
+    # Clear Spotify tokens from session and redirect home
+    from .spotify_tokens import clear_tokens
+    clear_tokens()
+    flash("Logged out of Spotify.", "info")
+    return redirect(url_for('routes.home'))
