@@ -223,7 +223,7 @@ main.main-content {
 
 .overlay {
   position: absolute;
-  top: 80px;
+  top: 90px;
   left: 8%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -245,8 +245,8 @@ main.main-content {
   background-color: #1ed760;
 }
 
-
 .alert {
+  position: absolute;
   margin-top: 15px;
   padding: 10px 20px;
   background: rgba(255, 255, 255, 0.8);
@@ -258,3 +258,38 @@ main.main-content {
   top: 100px; /* push down below your header (adjust this value) */
   left: 20px; /* optional horizontal offset */
 }
+
+/* Song Pin Info Stuff */
+.spotify-pin {
+  max-width: 250px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #12121286;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.spotify-pin img {
+  width: 100px;          /* fixed width */
+  height: 100px;         /* fixed height */
+  border-radius: 6px;
+  object-fit: cover;     /* crop to fill, keeps aspect ratio */
+  margin-bottom: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;    /* center the image */
+}
+
+
+.spotify-pin .track-title {
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.spotify-pin .artist {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+
