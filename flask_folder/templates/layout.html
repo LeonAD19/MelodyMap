@@ -5,6 +5,9 @@
     <title>Melody Map</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <!--profile.css: top bar (avatar/name) styles implemented-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -14,7 +17,19 @@
   </head>
 
   <body>
-    <header>
+    <!-- Global header top bar appears on all pages extending this layout -->
+    <header class="topbar">
+      <!-- User cluster (avatar/name)
+       Hidden by default via CSS; shown by topbar.js only after /spotify/profile responds 200. -->
+      <div id="header-user" class="header-user">
+        <!-- Default profile picture fetched by default-avatar.png -->
+        <img id="header-pic" class="header-pic" src="{{ url_for('static', filename='img/default-avatar.png') }}" alt="profile">
+        <div class="header-info">
+          <!-- Placeholder for user information, until replaced by spotify display name by topbar.js-->
+          <div id="header-name" class="header-name">Spotify User</div>
+        </div>
+      </div>
+      
       <div class="loggedIn">
         {% if user_auth %}
           <img src="{{ url_for('static', filename='spotifylogo.png') }}" alt="Spotify Logo" />
@@ -34,6 +49,10 @@
     <div class="container">
       {% block content %}{% endblock %}
     </div>
+    
+    <!-- Top bar script (loads profile once) -->
+<script src="{{ url_for('static', filename='js/topbar.js') }}"></script>
+
 <!--Leaflet JS-->
 <script
   src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"

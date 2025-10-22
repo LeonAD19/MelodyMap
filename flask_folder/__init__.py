@@ -12,6 +12,9 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY']= os.getenv("FLASK_SECRET_KEY") # Set Flask secret key
 
+    # Make sessions non-permanent globally (session cookies expire on browser close)
+    app.config['SESSION_PERMANENT'] = False
+    
     # Import and register route blueprints
     from .routes import routes, spotify_api
     app.register_blueprint(routes)
