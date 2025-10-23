@@ -72,9 +72,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const res = await fetch(`/spotify/now_playing?lat=${lat}&lng=${lng}&_=${Date.now()}`);
     // Parse JSON rather than just getting ALL the text
     const data = await res.json();
-    if (!data.authorized || !data.playing) {
+    if(!data.authorized) {
       marker
-        .bindPopup(`<b>No song currently playing</b>
+        .bindPopup(`<b>You are not logged in!</b>
+          <br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
+        .openPopup();
+      return;
+    }
+     
+    if (!data.playing) {
+      marker
+        .bindPopup(`<b>No song currently playing!</b>
           <br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
         .openPopup();
       return;
