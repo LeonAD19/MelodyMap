@@ -42,25 +42,41 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   // --- Click to drop pins ---
   map.on("click", async (e) => {
-    const { lat, lng } = e.latlng;
-    try {
-      const res = await fetch("/spotify/now_playing?_" + Date.now());
-      const html = await res.text();
-      L.marker([lat, lng])
-        .addTo(map)
-        .bindPopup(
-          `<div style="max-width:250px;">
-            ${html}<br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>
-          </div>`
-        )
+  const { lat, lng } = e.latlng;
+  const marker = L.marker([lat, lng]).addTo(map);
+
+  try {
+    const res = await fetch("/spotify/now_playing?_" + Date.now());
+    // Parse JSON rather than just getting ALL the text
+    const data = await res.json();
+    if (!data.authorized || !data.playing) {
+      marker
+        .bindPopup(`<b>No song currently playing</b>
+          <br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
         .openPopup();
-    } catch {
-      L.marker([lat, lng])
-        .addTo(map)
-        .bindPopup("<b>Could not load song info</b>")
-        .openPopup();
+      return;
     }
-  });
+    const song = data.playing;
+    // Create HTML for the popup
+    const html = `
+      <div class="spotify-pin">
+        <img src="${song.art}" alt="Album Art" />
+        <div class="track-info">
+          <strong class="track-title">${song.name}</strong><br>
+          <span class="artist">${song.artists}</span><br>
+        </div>
+        <small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>
+      </div>
+    `;
+    marker.bindPopup(html).openPopup();
+  } catch (err) {
+    console.error("Error fetching song info:", err);
+    marker
+      .bindPopup(`<b>Could not load song info</b><br>
+                  <small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
+      .openPopup();
+  }
+});
   // ---------------------------
   // Lazy refetch hook (placeholder for backend integration)
   // ---------------------------
