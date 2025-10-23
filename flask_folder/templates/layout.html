@@ -41,6 +41,11 @@
         <nav>
           <ul class="menu">
             <li><a href="{{ url_for('routes.home') }}">Home</a></li>
+            {% if user_auth %}
+              <li><a href="{{ url_for('spotify_bp.logout') }}">Logout</a></li>
+            {% else %}
+              <li><a href="{{ url_for('spotify_bp.login') }}">Login with Spotify</a></li>
+            {% endif %}
           </ul>
         </nav>
       </div>
