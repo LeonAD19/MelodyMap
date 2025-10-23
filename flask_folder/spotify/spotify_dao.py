@@ -2,33 +2,41 @@ from datetime import datetime, timezone
 from pymongo import MongoClient, ASCENDING
 import os
 import certifi
+from flask_folder import logger
 
 # Get MongoDB URI from env, raise error if not set
 uri = os.getenv('MONGODB_URI')
 if not uri:
-    raise ValueError("MONGODB_URI environment variable not set.")
+    logger.error("MONGODB_URI environment variable not set.")
+    client = None
+    db = None
+    song_collection = None
+else:
+    # Create client
+    client = MongoClient(
+        uri,
+        tlsCAFile=certifi.where(),   # use a verified HTTPS certificate list
+        serverSelectionTimeoutMS=3000,  # prevents hanging requests / timeouts.
+        socketTimeoutMS=3000    # prevents hanging requests / timeouts.
+    )
 
-# Create client
-client = MongoClient(
-    uri, 
-    tlsCAFile=certifi.where(),   # use a verified HTTPS certificate list
-    serverSelectionTimeoutMS=3000,  # prevents hanging requests / timeouts.
-    socketTimeoutMS=3000    # prevents hanging requests / timeouts.
-)
+    SONG_RECORD_TTL_SECONDS = 30
 
-SONG_RECORD_TTL_SECONDS = 30
+    db = client.spotify            # database
+    song_collection = db.songs            # collection
 
-db = client.spotify            # database
-song_collection = db.songs            # collection
-
-song_collection.create_index(
-    [("createdAt", ASCENDING)],
-    expireAfterSeconds=SONG_RECORD_TTL_SECONDS
-)
+    song_collection.create_index(
+        [("createdAt", ASCENDING)],
+        expireAfterSeconds=SONG_RECORD_TTL_SECONDS
+    )
 
 def send_song_info(user_uuid: str, name: str, artist:str, album_art: str, lat: float, lng: float):
+    if song_collection is None:
+        logger.error("Cannot send song info: MongoDB connection not available.")
+        return
+
     if user_uuid is None or name is None:
-        print(f"send_song_info called with invalid params: uuid={user_uuid}, name={name}")
+        logger.error(f"send_song_info called with invalid params: uuid={user_uuid}, name={name}")
         return
     
     # If user has some song 
