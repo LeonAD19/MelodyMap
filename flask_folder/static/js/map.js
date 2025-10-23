@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const marker = L.marker([lat, lng]).addTo(map);
 
   try {
-    const res = await fetch("/spotify/now_playing?_" + Date.now());
+    const res = await fetch(`/spotify/now_playing?lat=${lat}&lng=${lng}&_=${Date.now()}`);
     // Parse JSON rather than just getting ALL the text
     const data = await res.json();
     if (!data.authorized || !data.playing) {

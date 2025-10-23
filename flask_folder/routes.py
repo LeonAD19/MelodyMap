@@ -1,6 +1,6 @@
 import sys 
 sys.dont_write_bytecode = True
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, request
 
 # Create a blueprint for routes
 routes = Blueprint('routes', __name__)
@@ -21,7 +21,12 @@ def map_page():
 @spotify_api.route('/now_playing')
 def now_playing():
     from .spotify.spotify_api import now_playing
-    return now_playing()
+    # Get coordinates from query parameters (sent from frontend)
+    
+    lat = request.args.get('lat', 0, type=float)
+    lng = request.args.get('lng', 0, type=float)
+    
+    return now_playing(lat, lng)
 
 # Purpose: Render the currently playing song
 @spotify_api.route('/render_now_playing')

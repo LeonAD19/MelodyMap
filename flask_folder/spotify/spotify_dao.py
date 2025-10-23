@@ -27,18 +27,23 @@ song_collection.create_index(
     expireAfterSeconds=30  # 30 seconds
 )
 
-def send_song_info(user_uuid: str, name: str = "test"):
+def send_song_info(user_uuid: str, name: str, lat: float, lng: float):
     if user_uuid is None or name is None:
         print("why is str none???")
         return
     
     # If user has some song 
     user_record = song_collection.find_one({"uuid": user_uuid})
+    created_at = datetime.now(timezone.utc)
     if user_record == None:
         # Insert to DB
-        created_at = datetime.now(timezone.utc)
-        song_collection.insert_one(
-            {"uuid": user_uuid, "name": name, "createdAt": created_at}
+        song_collection.insert_one({
+            "uuid": user_uuid, 
+            "name": name, 
+            "lat": lat,
+            "lng": lng,
+            "createdAt": created_at
+            }
         )
         return 
     
@@ -51,7 +56,7 @@ def send_song_info(user_uuid: str, name: str = "test"):
         {"uuid": user_uuid},
         {"$set": {
             "name": name,
-            "createdAt": datetime.now(timezone.utc)
+            "createdAt": created_at
         }}
     )
     

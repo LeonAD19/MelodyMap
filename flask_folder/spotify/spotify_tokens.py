@@ -1,5 +1,6 @@
 import os
 import time
+import uuid
 from flask import session
 import requests
 
@@ -14,12 +15,14 @@ def set_tokens(tokens: dict) -> None:
     # Calculate token expiration time (subtract 30 sec for safety)
     expires_in = int(tokens.get('expires_in', 3600))
     session['spotify_expires_at'] = int(time.time()) + expires_in - 30  # safety margin
+    session['uuid'] = str(uuid.uuid4())
 
 # Remove all spotify_* keys from session.
 def clear_tokens() -> None:
     for k in list(session.keys()):
         if k.startswith('spotify_'):
             session.pop(k)
+    session.pop('uuid', None)
 
 # Return a valid access token
 # Should refresh if needed

@@ -1,5 +1,5 @@
 import requests
-from flask import jsonify,url_for
+from flask import jsonify, session,url_for
 from .spotify_tokens import clear_tokens, get_access_token
 from .spotify_errors import SPOTIFY_ERROR_MESSAGES
 
@@ -36,7 +36,7 @@ def get_profile():
 
 # Purpose: 
 # Returns details of currently playing song for authenticated Spotify User
-def now_playing():
+def now_playing(lat: float, lng: float):
     token = get_access_token()
     headers = {'Authorization': f'Bearer {token}'}
     url = 'https://api.spotify.com/v1/me/player/currently-playing'
@@ -74,8 +74,7 @@ def now_playing():
     artists = ', '.join(a.get('name', '') for a in item.get('artists', [])) or 'Unknown'
     
     from .spotify_dao import send_song_info
-    
-    send_song_info("123abd", item.get('name'))
+    send_song_info(session['uuid'], item.get('name'), lat=lat, lng=lng)
 
     # Return song details
     return jsonify({
