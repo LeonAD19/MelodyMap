@@ -1,5 +1,5 @@
 import requests
-from flask import jsonify,url_for
+from flask import jsonify, session, url_for
 from .spotify_tokens import clear_tokens, get_access_token
 from .spotify_errors import SPOTIFY_ERROR_MESSAGES
 
@@ -36,7 +36,7 @@ def get_profile():
 
 # Purpose: 
 # Returns details of currently playing song for authenticated Spotify User
-def now_playing():
+def now_playing(lat: float, lng: float):
     token = get_access_token()
     headers = {'Authorization': f'Bearer {token}'}
     url = 'https://api.spotify.com/v1/me/player/currently-playing'
@@ -72,6 +72,9 @@ def now_playing():
     album = item.get('album', {})
     album_images = album.get('images', None)
     artists = ', '.join(a.get('name', '') for a in item.get('artists', [])) or 'Unknown'
+    
+    from .spotify_dao import send_song_info
+    send_song_info(session['uuid'], item.get('name'), artists, album_images[0].get('url'), lat=lat, lng=lng)
 
     # Return song details
     return jsonify({
@@ -89,9 +92,6 @@ def now_playing():
     
 # Purpose: Return if Authenticated Spotify User is logged in
 def is_logged_in() -> True | False:
-    import requests
-    from .spotify_tokens import clear_tokens, get_access_token
-
     token = get_access_token()
     if not token:       # If no token, then cannot be logged in
         return False
