@@ -32,15 +32,27 @@ def send_song_info(user_uuid: str, name: str = "test"):
         print("why is str none???")
         return
     
-    if song_collection.find_one({"uuid": user_uuid, "name": name}) != None:
+    # If user has some song 
+    user_record = song_collection.find_one({"uuid": user_uuid})
+    if user_record == None:
+        # Insert to DB
+        created_at = datetime.now(timezone.utc)
+        song_collection.insert_one(
+            {"uuid": user_uuid, "name": name, "createdAt": created_at}
+        )
+        return 
+    
+    # If a record for the current song already exists, do nothing
+    if user_record.get('name') == name:
         return
     
-    # Insert to DB
-    created_at = datetime.now(timezone.utc)
-    song_collection.insert_one(
-        {"uuid": user_uuid, "name": name, "createdAt": created_at}
+    # If the current song doesnt exist, but the uuid exists. Update the record to new song and reset expiration 
+    song_collection.update_one(
+        {"uuid": user_uuid},
+        {"$set": {
+            "name": name,
+            "createdAt": datetime.now(timezone.utc)
+        }}
     )
-    # print("Inserted:", {"uuid": user_uuid, "name": name, "createdAt": created_at})
     
-
-# send_song_info("124798", "test2")
+    
