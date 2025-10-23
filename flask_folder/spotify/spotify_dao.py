@@ -1,12 +1,7 @@
 from datetime import datetime, timezone
-from dotenv import load_dotenv
 from pymongo import MongoClient, ASCENDING
 import os
 import certifi
-
-# TEMP:
-load_dotenv()
-
 
 # Get MongoDB URI from env, raise error if not set
 uri = os.getenv('MONGODB_URI')
@@ -59,5 +54,3 @@ def send_song_info(user_uuid: str, name: str, lat: float, lng: float):
             "createdAt": created_at
         }}
     )
-    
-    

@@ -1,5 +1,5 @@
 import requests
-from flask import jsonify, session,url_for
+from flask import jsonify, session, url_for
 from .spotify_tokens import clear_tokens, get_access_token
 from .spotify_errors import SPOTIFY_ERROR_MESSAGES
 
