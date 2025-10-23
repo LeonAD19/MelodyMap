@@ -11,26 +11,30 @@ if not uri:
 # Create client
 client = MongoClient(
     uri, 
-    tlsCAFile=certifi.where()   # use a verified HTTPS certificate list
+    tlsCAFile=certifi.where(),   # use a verified HTTPS certificate list
+    serverSelectionTimeoutMS=5000,  # prevents hanging requests / timeouts.
+    socketTimeoutMS=5000    # prevents hanging requests / timeouts.
 )
+
+SONG_RECORD_TTL_SECONDS = 30
 
 db = client.spotify            # database
 song_collection = db.songs            # collection
 
 song_collection.create_index(
     [("createdAt", ASCENDING)],
-    expireAfterSeconds=30  # 30 seconds
+    expireAfterSeconds=SONG_RECORD_TTL_SECONDS
 )
 
 def send_song_info(user_uuid: str, name: str, lat: float, lng: float):
     if user_uuid is None or name is None:
-        print("why is str none???")
+        print(f"send_song_info called with invalid params: uuid={user_uuid}, name={name}")
         return
     
     # If user has some song 
     user_record = song_collection.find_one({"uuid": user_uuid})
     created_at = datetime.now(timezone.utc)
-    if user_record == None:
+    if user_record is None:
         # Insert to DB
         song_collection.insert_one({
             "uuid": user_uuid, 
@@ -43,7 +47,7 @@ def send_song_info(user_uuid: str, name: str, lat: float, lng: float):
         return 
     
     # If a record for the current song already exists, do nothing
-    if user_record.get('name') == name:
+    if user_record.get('name') is name:
         return
     
     # If the current song doesnt exist, but the uuid exists. Update the record to new song and reset expiration 

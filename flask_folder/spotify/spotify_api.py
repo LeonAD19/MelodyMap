@@ -92,9 +92,6 @@ def now_playing(lat: float, lng: float):
     
 # Purpose: Return if Authenticated Spotify User is logged in
 def is_logged_in() -> True | False:
-    import requests
-    from .spotify_tokens import clear_tokens, get_access_token
-
     token = get_access_token()
     if not token:       # If no token, then cannot be logged in
         return False
