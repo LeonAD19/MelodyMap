@@ -12,8 +12,8 @@ if not uri:
 client = MongoClient(
     uri, 
     tlsCAFile=certifi.where(),   # use a verified HTTPS certificate list
-    serverSelectionTimeoutMS=5000,  # prevents hanging requests / timeouts.
-    socketTimeoutMS=5000    # prevents hanging requests / timeouts.
+    serverSelectionTimeoutMS=3000,  # prevents hanging requests / timeouts.
+    socketTimeoutMS=3000    # prevents hanging requests / timeouts.
 )
 
 SONG_RECORD_TTL_SECONDS = 30
@@ -26,7 +26,7 @@ song_collection.create_index(
     expireAfterSeconds=SONG_RECORD_TTL_SECONDS
 )
 
-def send_song_info(user_uuid: str, name: str, lat: float, lng: float):
+def send_song_info(user_uuid: str, name: str, artist:str, album_art: str, lat: float, lng: float):
     if user_uuid is None or name is None:
         print(f"send_song_info called with invalid params: uuid={user_uuid}, name={name}")
         return
@@ -39,6 +39,8 @@ def send_song_info(user_uuid: str, name: str, lat: float, lng: float):
         song_collection.insert_one({
             "uuid": user_uuid, 
             "name": name, 
+            "artist": artist,
+            "album_art": album_art,
             "lat": lat,
             "lng": lng,
             "createdAt": created_at
@@ -55,6 +57,8 @@ def send_song_info(user_uuid: str, name: str, lat: float, lng: float):
         {"uuid": user_uuid},
         {"$set": {
             "name": name,
+            "artist": artist,
+            "album_art": album_art,
             "createdAt": created_at
         }}
     )

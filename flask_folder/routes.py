@@ -23,8 +23,8 @@ def now_playing():
     from .spotify.spotify_api import now_playing
     
     # Get coordinates from query parameters (sent from frontend)
-    lat = request.args.get('lat', 0, type=float)
-    lng = request.args.get('lng', 0, type=float)
+    lat = request.args.get('lat', type=float)
+    lng = request.args.get('lng', type=float)
     
     return now_playing(lat, lng)
 
