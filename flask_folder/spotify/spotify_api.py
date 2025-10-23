@@ -72,6 +72,10 @@ def now_playing():
     album = item.get('album', {})
     album_images = album.get('images', None)
     artists = ', '.join(a.get('name', '') for a in item.get('artists', [])) or 'Unknown'
+    
+    from .spotify_dao import send_song_info
+    
+    send_song_info("123abd", item.get('name'))
 
     # Return song details
     return jsonify({
