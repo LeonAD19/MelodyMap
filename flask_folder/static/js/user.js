@@ -44,5 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Hide the card initially until we know the state
   if (card) card.style.display = 'none';
-
+  
+  // Fetch right away
+  getNowPlaying();
 });
