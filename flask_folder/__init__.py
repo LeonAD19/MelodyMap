@@ -4,6 +4,17 @@ sys.dont_write_bytecode = True # Prevents creation of .pyc cache files
 
 from dotenv import load_dotenv
 from flask import Flask
+import logging
+
+# Configure logging format
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(levelname)s - %(name)s: %(message)s'
+)
+
+# Create global logger
+logger = logging.getLogger(__name__)
+
 
 ### Application Factory ###
 def create_app():
