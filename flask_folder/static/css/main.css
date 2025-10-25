@@ -293,3 +293,87 @@ main.main-content {
 }
 
 
+/* Bottom-left user card */
+#user-card {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 1100;
+  background: rgba(18, 18, 18, 0.92);
+  color: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  display: none; /* shown by JS only when authorized */
+  width: 280px;              /* extend card width so progress bar is longer */
+  max-width: calc(100vw - 32px);
+}
+
+#user-card .user-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#user-card .user-art {
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: #222;
+}
+
+#user-card .user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0; /* enable text truncation */
+  flex: 1 1 auto; /* let info stretch so the bar is wider */
+}
+
+#user-card .user-user {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+#user-card .user-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#user-card .user-artists {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#user-card .user-progress {
+  margin-top: 6px;
+}
+
+#user-card .user-progress-bar {
+  position: relative;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+#user-card .user-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #1db954; /* Spotify green */
+}
+
+#user-card .user-times {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  opacity: 0.8;
+  margin-top: 2px;
+}
