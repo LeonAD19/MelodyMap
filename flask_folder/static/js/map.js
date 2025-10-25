@@ -7,11 +7,12 @@
 document.addEventListener("DOMContentLoaded", function () {
   const map = L.map("map");
   // OSM tiles
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map);
+  L.tileLayer("https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", {
+  maxZoom: 20,
+  attribution:
+    '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>, &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
   
   // Fallback center (Texas State vicinity)
   const fallback = { lat: 29.888, lng: -97.941, zoom: 14 };
