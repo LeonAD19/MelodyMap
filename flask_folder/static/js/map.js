@@ -40,6 +40,29 @@ document.addEventListener("DOMContentLoaded", function () {
       { enableHighAccuracy: true, timeout: 6000 }
     );
   }
+
+  // Fetch mock song data from Flask endpoints
+  // Currently loads from static/mock/mock.json until MongoDB integration is ready
+  fetch("/spotify/songs")
+    .then(response => response.json())
+    .then(users => {
+      users.forEach(user => {
+        const {  username, song_title, artist_name, album_art, location } = user;
+        if (!location) return;
+        const lat = parseFloat(location.lat);
+        const lng = parseFloat(location.lng);
+        if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+        const popupHTML = `
+          <img src="${album_art}" alt="Album Art" width="100" style="border-radius:10px;margin-bottom:6px;">
+          <div><strong>${song_title}</strong> by ${artist_name}</div>
+          <div><em>Shared by ${username}</em></div>
+          <div style="font-size:0.85em;">Platform: ${platform}</div>
+        `;
+        L.marker([lat, lng]).addTo(map).bindPopup(popupHTML);
+      });
+    });
+
   // --- Click to drop pins ---
   map.on("click", async (e) => {
   const { lat, lng } = e.latlng;

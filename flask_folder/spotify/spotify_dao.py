@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from pymongo import MongoClient, ASCENDING
-import os
+import os,json
 import certifi
 from flask_folder import logger
 
@@ -70,3 +70,12 @@ def send_song_info(user_uuid: str, name: str, artist:str, album_art: str, lat: f
             "createdAt": created_at
         }}
     )
+
+# Retrieve all songs from the database
+def get_songs_from_db():
+    # Load mock data from static/mock/mock.json for now
+    static_mock = os.path.join(os.path.dirname(__file__), '..', 'static', 'mock', 'mock.json')
+    static_mock = os.path.normpath(static_mock)
+    with open(static_mock, 'r', encoding='utf-8') as f:
+        songs = json.load(f)
+    return songs

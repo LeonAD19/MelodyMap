@@ -1,6 +1,6 @@
-import sys 
+import sys
 sys.dont_write_bytecode = True
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request,jsonify
 
 # Create a blueprint for routes
 routes = Blueprint('routes', __name__)
@@ -38,3 +38,11 @@ def render_now_playing():
 def profile_route():
     from .spotify.spotify_api import get_profile
     return get_profile()
+
+# Define a route for the Spotify API that listens at '/spotify/songs'
+@spotify_api.route('/songs')
+def get_songs():
+    from .spotify.spotify_dao import get_songs_from_db
+    songs = get_songs_from_db()
+    return jsonify(songs)
+
