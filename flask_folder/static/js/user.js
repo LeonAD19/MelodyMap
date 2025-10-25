@@ -88,4 +88,5 @@ document.addEventListener('DOMContentLoaded', () => {
   // Get the first update immediately
   getNowPlaying();
 
+  setInterval (getNowPlaying,5000);
 });
