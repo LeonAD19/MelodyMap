@@ -111,16 +111,16 @@ For this sprint our main focus was to create the website, communicate with spoti
 
 For this sprint our main focus was to create the website, communicate with spotify api, and create a map.
 
-* [__Retrospective__](LINK GOES HERE)
+* [__Retrospective__](./Documentation/Sprint2-Retrospective.md)
 
-* __Burnup Report:__ ![Sprint1-Burnup](BURNUP PNG GOES HERE)
+* __Burnup Report:__ ![Sprint2-Burnup](BURNUP PNG GOES HERE)
 
 * __Contributions__
 
    * __Caden__ : 
-      * [Jira Task Documentation](./Documentation/Sprint2-Jira.md)
-   * __Devin__ : I merged all the different webpages we had into one homepage, fixed the visuals for the pin song information that was displayed, and redesigned the UI for the homepage for a polished look.
       * [Jira Task Documentation](ADD LINK)
+   * __Devin__ : I merged all the different webpages we had into one homepage, fixed the visuals for the pin song information that was displayed, and redesigned the UI for the homepage for a polished look.
+      * [Jira Task Documentation](./Documentation/Sprint2-Jira.md)
    * __Jacob__ : 
       * [Jira Task Documentation](ADD LINK)
    * __Leon__ : 
