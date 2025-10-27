@@ -125,7 +125,7 @@ For this sprint our main focus was to create the website, communicate with spoti
       * [Jira Task Documentation](ADD LINK)
    * __Leon__ : 
       * [Jira Task Documentation](ADD LINK)
-   * __Mateo__ :  
+   * __Mateo__ : I researched the lifetime of our pins in our map. I determined why/when they expired and how to ensure that their lifetime did not expire.  I created a document that contained my research and attached it to the given task. I also created/started working on our unit and integration tests.
 
 * __Future Implementation__
 
