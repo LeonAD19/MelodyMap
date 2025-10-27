@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from pymongo import MongoClient, ASCENDING
-import os,json
+import os
 import certifi
 from flask_folder import logger
 
@@ -67,15 +67,41 @@ def send_song_info(user_uuid: str, name: str, artist:str, album_art: str, lat: f
             "name": name,
             "artist": artist,
             "album_art": album_art,
+            "lat": lat,
+            "lng": lng,
             "createdAt": created_at
         }}
     )
 
 # Retrieve all songs from the database
 def get_songs_from_db():
-    # Load mock data from static/mock/mock.json for now
-    static_mock = os.path.join(os.path.dirname(__file__), '..', 'static', 'mock', 'mock.json')
-    static_mock = os.path.normpath(static_mock)
-    with open(static_mock, 'r', encoding='utf-8') as f:
-        songs = json.load(f)
+    if song_collection is None:
+        return []
+    
+    songs = []
+    for song in song_collection.find():
+        # Extract coordinates
+        lat = song.get("lat")
+        lng = song.get("lng")
+        
+        # Skip documents with missing/invalid coordinates
+        # (Prevents "null" pins at 0.0, 0.0)
+        if lat is None or lng is None:
+            logger.warning(f"Skipping song with missing coords: {song.get('uuid')}")
+            continue
+        try:
+            lat_float = float(lat)
+            lng_float = float(lng)
+        except (ValueError, TypeError):
+            logger.warning(f"Invalid coord types for {song.get('uuid')}: lat={lat}, lng={lng}")
+            continue
+        
+        songs.append({
+            "username": song.get("uuid", "Anonymous"),
+            "song_title": song.get("name", "Unknown"),
+            "artist_name": song.get("artist", "Unknown"),
+            "album_art": song.get("album_art"),
+            "lat": lat_float,
+            "lng": lng_float,
+        })
     return songs
