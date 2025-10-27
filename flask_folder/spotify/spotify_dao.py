@@ -30,7 +30,7 @@ else:
         expireAfterSeconds=SONG_RECORD_TTL_SECONDS
     )
 
-def send_song_info(user_uuid: str, name: str, artist:str, album_art: str, lat: float, lng: float):
+def send_song_info(user_uuid: str, name: str, artist: str, album_art: str, lat: float = None, lng: float = None):
     if song_collection is None:
         logger.error("Cannot send song info: MongoDB connection not available.")
         return
@@ -38,39 +38,45 @@ def send_song_info(user_uuid: str, name: str, artist:str, album_art: str, lat: f
     if user_uuid is None or name is None:
         logger.error(f"send_song_info called with invalid params: uuid={user_uuid}, name={name}")
         return
-    
-    # If user has some song 
+
+    # If user has some song
     user_record = song_collection.find_one({"uuid": user_uuid})
     created_at = datetime.now(timezone.utc)
+    
+    # Build the update document with required fields
+    update_doc = {
+        "name": name,
+        "artist": artist,
+        "album_art": album_art,
+        "createdAt": created_at
+    }
+
+    # Only update lat/lng if both are provided
+    # Else we pull the old lat and lng
+    if lat is not None and lng is not None:
+        update_doc["lat"] = lat
+        update_doc["lng"] = lng
+    else:
+        if user_record is not None:
+            update_doc['lat'] = user_record.get('lat')
+            update_doc['lng'] = user_record.get('lng')
+    
     if user_record is None:
         # Insert to DB
         song_collection.insert_one({
-            "uuid": user_uuid, 
-            "name": name, 
-            "artist": artist,
-            "album_art": album_art,
-            "lat": lat,
-            "lng": lng,
-            "createdAt": created_at
-            }
-        )
-        return 
-    
-    # If a record for the current song already exists, do nothing
-    if user_record.get('name') is name:
+            "uuid": user_uuid,
+            **update_doc
+        })
+        return
+
+    # If a record for the current song already exists for the current user, do nothing
+    if user_record.get('name') == name:
         return
     
-    # If the current song doesnt exist, but the uuid exists. Update the record to new song and reset expiration 
+    # If the current song doesn't exist, but the uuid exists. Update the record to new song and reset expiration
     song_collection.update_one(
         {"uuid": user_uuid},
-        {"$set": {
-            "name": name,
-            "artist": artist,
-            "album_art": album_art,
-            "lat": lat,
-            "lng": lng,
-            "createdAt": created_at
-        }}
+        {"$set": update_doc}
     )
 
 # Retrieve all songs from the database
