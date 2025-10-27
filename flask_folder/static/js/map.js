@@ -42,27 +42,54 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
-  // Fetch mock song data from Flask endpoints
-  // Currently loads from static/mock/mock.json until MongoDB integration is ready
+  // --- Periodic refresh of song markers ---
+  function fetchAndRenderSongs() {
   fetch("/spotify/songs")
-    .then(response => response.json())
+    .then(res => res.json())
+    // Process the array of songs returned from the database
     .then(users => {
-      users.forEach(user => {
-        const {  username, song_title, artist_name, album_art, location } = user;
-        if (!location) return;
-        const lat = parseFloat(location.lat);
-        const lng = parseFloat(location.lng);
-        if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+      // Clear old markers if needed
+      if (window.songMarkers) {
+        window.songMarkers.forEach(m => map.removeLayer(m));
+      }
+      // Reset the global marker array to empty (fresh start for new markers)
+      window.songMarkers = [];
 
+      // Loop through each song from the database and create a marker
+      users.forEach(user => {
+        const { username, song_title, artist_name, album_art, lat, lng } = user;
+        // Parse latitude and longitude to ensure they are numbers (not strings)
+        const latitude = parseFloat(lat);
+        const longitude = parseFloat(lng);
+
+         // Validate that coordinates are valid finite numbers
+        if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+          console.warn("Invalid coords for user:", username, lat, lng);
+          return;  // Skip this user (bad data)
+        }
+          // Create a Leaflet marker at the song's coordinates
+          // L.marker([lat, lng]) creates the marker object
+          // .addTo(map) renders it on the map immediately (makes it visible)
+        const marker = L.marker([latitude, longitude]).addTo(map);
+        window.songMarkers.push(marker);
+
+        // Build the popup HTML content that shows when user clicks the marker
         const popupHTML = `
           <img src="${album_art}" alt="Album Art" width="100" style="border-radius:10px;margin-bottom:6px;">
-          <div><strong>${song_title}</strong> by ${artist_name}</div>
-          <div><em>Shared by ${username}</em></div>
-          <div style="font-size:0.85em;">Platform: ${platform}</div>
+          <div><strong>${song_title || 'Unknown'}</strong> by ${artist_name || 'Unknown'}</div>
         `;
-        L.marker([lat, lng]).addTo(map).bindPopup(popupHTML);
+        // Attach popup to marker
+        marker.bindPopup(popupHTML);
       });
-    });
+    })
+
+    // Handle any errors that occur during fetch or processing
+    .catch(err => console.error("Failed to fetch songs:", err));
+}
+
+    // After initial fetch, refrsh every 15 seconds
+    fetchAndRenderSongs();
+    setInterval(fetchAndRenderSongs, 15000);
 
   // --- Click to drop pins ---
   map.on("click", async (e) => {
