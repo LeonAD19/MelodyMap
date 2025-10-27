@@ -60,8 +60,13 @@ def send_song_info(user_uuid: str, name: str, artist: str, album_art: str, lat: 
         if user_record is not None:
             update_doc['lat'] = user_record.get('lat')
             update_doc['lng'] = user_record.get('lng')
-    
+
     if user_record is None:
+        # New user: require coordinates
+        if lat is None or lng is None:
+            logger.warning(f"Cannot create new record for {user_uuid}: lat/lng required for new users")
+            return
+
         # Insert to DB
         song_collection.insert_one({
             "uuid": user_uuid,
