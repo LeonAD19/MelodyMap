@@ -27,5 +27,7 @@
 * [MM-## Description](ADD LINK)
 
 ### Mateo
-* [MM-## Description](ADD LINK)
-
+* [MM-40 Start Writing Unit Tests](https://cs3398-enceladus-fall.atlassian.net/browse/MM-40) 
+* [MM-65 Mateo - Code Cleanup](https://cs3398-enceladus-fall.atlassian.net/browse/MM-65)
+* [MM-71 Start Writing Integration Tests](https://cs3398-enceladus-fall.atlassian.net/browse/MM-71)
+* [MM-72 Look Into Lifetime of Pins (Look at Expiration Issue)](https://cs3398-enceladus-fall.atlassian.net/browse/MM-72)
