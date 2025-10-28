@@ -123,7 +123,7 @@ For this sprint our main focus was to create the website, communicate with spoti
       * [Jira Task Documentation](./Documentation/Sprint2-Jira.md)
    * __Jacob__ : 
       * [Jira Task Documentation](ADD LINK)
-   * __Leon__ : 
+   * __Leon__ : Implemented handling song info on map pins including the location as well as having a mock account setup. Displayed the user profile info on the top bar showing the users profile pic as well as the username.
       * [Jira Task Documentation](ADD LINK)
    * __Mateo__ : I researched the lifetime of our pins in our map. I determined why/when they expired and how to ensure that their lifetime did not expire.  I created a document that contained my research and attached it to the given task. I also created/started working on our unit and integration tests.
 
