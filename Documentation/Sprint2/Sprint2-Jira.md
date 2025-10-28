@@ -24,7 +24,11 @@
 * [MM-68 Create and Design Better Homepage UI](https://cs3398-enceladus-fall.atlassian.net/jira/software/projects/MM/list/?jql=project%20%3D%20%22MM%22%20ORDER%20BY%20created%20DESC&selectedIssue=MM-68)
 
 ### Jacob
-* [MM-## Description](ADD LINK)
+* [MM-64 Jacob - Code Cleanup](https://cs3398-enceladus-fall.atlassian.net/browse/MM-64)
+* [MM-70 Fetch and display track title and artist] (https://cs3398-enceladus-fall.atlassian.net/browse/MM-70)
+* [MM-74 Add album thumbnail with fetched tracks from user] (https://cs3398-enceladus-fall.atlassian.net/browse/MM-74) 
+* [MM-75 Update when songs play] (https://cs3398-enceladus-fall.atlassian.net/browse/MM-75)
+
 
 ### Leon
 * [MM-61 Leon - Code Cleanup](https://cs3398-enceladus-fall.atlassian.net/jira/software/projects/MM/list/?jql=project%20%3D%20%22MM%22%20AND%20assignee%20%3D%20currentUser%28%29%20ORDER%20BY%20created%20DESC&selectedIssue=MM-61)
