@@ -24,7 +24,10 @@
 * [MM-## Description](ADD LINK)
 
 ### Leon
-* [MM-## Description](ADD LINK)
+* [MM-61 Leon - Code Cleanup](https://cs3398-enceladus-fall.atlassian.net/jira/software/projects/MM/list/?jql=project%20%3D%20%22MM%22%20AND%20assignee%20%3D%20currentUser%28%29%20ORDER%20BY%20created%20DESC&selectedIssue=MM-61)
+* [MM-36 Display profile info next to music (profile/name)](https://cs3398-enceladus-fall.atlassian.net/jira/software/projects/MM/list/?jql=project%20%3D%20%22MM%22%20AND%20assignee%20%3D%20currentUser%28%29%20ORDER%20BY%20created%20DESC&selectedIssue=MM-36)
+* [MM-38 Save mock account w/ a saved location and song](https://cs3398-enceladus-fall.atlassian.net/jira/software/projects/MM/list/?jql=project%20%3D%20%22MM%22%20AND%20assignee%20%3D%20currentUser%28%29%20ORDER%20BY%20created%20DESC&selectedIssue=MM-38)
+* [MM-46 Handle song info on map pins](https://cs3398-enceladus-fall.atlassian.net/jira/software/projects/MM/list/?jql=project%20%3D%20%22MM%22%20AND%20assignee%20%3D%20currentUser%28%29%20ORDER%20BY%20created%20DESC&selectedIssue=MM-46)
 
 ### Mateo
 * [MM-40 Start Writing Unit Tests](https://cs3398-enceladus-fall.atlassian.net/browse/MM-40) 
