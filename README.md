@@ -104,7 +104,7 @@ For this sprint our main focus was to create the website, communicate with spoti
 
 ### Review and Retrospective
 
-For this sprint our main focus was to create the website, communicate with spotify api, and create a map.
+For this sprint our main focus was to host the website, create and use a database, and overhaul the UI.
 
 * [__Retrospective__](./Documentation/Sprint2/Sprint2-Retrospective.md)
 

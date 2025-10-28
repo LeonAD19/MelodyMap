@@ -1,4 +1,4 @@
-# Sprint 1 - Retrospective
+# Sprint 2 - Retrospective
 
 ## What went well and what not? 
 * __Not well__: 
@@ -26,7 +26,7 @@
 
 ## AI
 ### Description of how AI (ChatGPT, Anthropic, Genesis, etc) assisted the team during the semester.
-*  
+* AI assissted our team by providing a resource that could generate information and responses based directly on our project, not just general information. This made it useful and directly applicable to certain issues we encountered.
 ### At least 3 specific examples of what AI was especially good at.
  1. AI was really useful in making outlines and frameworks for how code will look.
  2. AI was also very effective on research and better understanding of the implementation of the pros and cons of tools like Mongodb and Firebase
