@@ -115,7 +115,7 @@ For this sprint our main focus was to create the website, communicate with spoti
 
    * __Caden__ : I set up the host environment in Google Cloud, created the database, and implemented functionality to send song information to the database.
    * __Devin__ : I merged all the different webpages we had into one homepage, fixed the visuals for the pin song information that was displayed, and redesigned the UI for the homepage for a polished look.
-   * __Jacob__ : 
+   * __Jacob__ : I implemented logout button, and created a user card that displays the current song from user, which handles when no song is playing and tracks song progress. 
    * __Leon__ : Implemented handling song info on map pins including the location as well as having a mock account setup. Displayed the user profile info on the top bar showing the users profile pic as well as the username.
    * __Mateo__ : I researched the lifetime of our pins in our map. I determined why/when they expired and how to ensure that their lifetime did not expire.  I created a document that contained my research and attached it to the given task. I also created/started working on our unit and integration tests.
 
