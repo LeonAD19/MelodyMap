@@ -12,7 +12,10 @@
 # Contributions
 
 ### Caden
-* [MM-## Description](ADD LINK)
+* [MM-34 Implement Song Info Sending](https://cs3398-enceladus-fall.atlassian.net/browse/MM-34)
+* [MM-35 Setup GCloud Run](https://cs3398-enceladus-fall.atlassian.net/browse/MM-35)
+* [MM-62 Caden - Code Cleanup](https://cs3398-enceladus-fall.atlassian.net/browse/MM-62)
+* [MM-72 Auto Deploy to GCloud](https://cs3398-enceladus-fall.atlassian.net/browse/MM-72)
 
 ### Devin
 * [MM-63 Devin - Code cleanup](https://cs3398-enceladus-fall.atlassian.net/jira/software/projects/MM/list/?jql=project%20%3D%20%22MM%22%20ORDER%20BY%20created%20DESC&selectedIssue=MM-63) 

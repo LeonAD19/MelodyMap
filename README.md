@@ -117,8 +117,8 @@ For this sprint our main focus was to create the website, communicate with spoti
 
 * __Contributions__
 
-   * __Caden__ : 
-      * [Jira Task Documentation](ADD LINK)
+   * __Caden__ : I set up the host environment in Google Cloud, created the database, and implemented functionality to send song information to the database.
+      * [Jira Task Documentation](./Documentation/Sprint2-Jira.md)
    * __Devin__ : I merged all the different webpages we had into one homepage, fixed the visuals for the pin song information that was displayed, and redesigned the UI for the homepage for a polished look.
       * [Jira Task Documentation](./Documentation/Sprint2-Jira.md)
    * __Jacob__ : 
@@ -129,11 +129,12 @@ For this sprint our main focus was to create the website, communicate with spoti
 
 * __Future Implementation__
 
-   * 
+   * Uniform pin displays (not a different view for MY pin vs YOUR pin)
 
-   * 
+   * Pin lifetime should have certain lifetime after the song ends, and should not be removed until the song is over.
 
-   * 
+   * Get our spotify app public (so others can use the app too)
 
-   * 
+   * Update location for pins (instead of just timing it out and replacing the song info at the old location)
 
+   * link/redirect function so user can click on another person's song and see it on spotify/maybe hear a preview?
