@@ -29,9 +29,7 @@ We want to:
 
 ---
 
-## 
-
- ![Project Logo](./MelodyMapLogo.png)
+## ![Project Logo](./Documentation/MelodyMapLogo.png)
 
 ---
 
@@ -72,26 +70,23 @@ We plan to use the following technologies:
 6. **Nearby Listening Visibility**  
    - Allows users to see what others within a one-mile radius are listening to in real time.  
 ##
-# Sprint 1 Review
+## Sprint 1 Review
 
 ### Review and Retrospective
 
 For this sprint our main focus was to create the website, communicate with spotify api, and create a map.
 
-* [__Retrospective__](./Documentation/Sprint1-Retrospective.md)
+* [__Retrospective__](./Documentation/Sprint1/Sprint1-Retrospective.md)
 
-* __Burnup Report:__ ![Sprint1-Burnup](./Documentation/Sprint1-Burnup.png)
+* __Burnup Report:__ ![Sprint1-Burnup](./Documentation/Sprint1/Sprint1-Burnup.png)
 
 * __Contributions__
+   * [Jira Task Documentation](./Documentation/Sprint1/Sprint1-Jira.md)
 
    * __Caden__ : Established a route that communicates with Spotify API, and implemented spotify token refresh (so end user needs to manually verify as little as possible).
-      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
    * __Devin__ : Created and designed the inital homepage/website, implemented a feature to display the current song's  metadata on map pin, and display which account type has been linked.
-      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
    * __Jacob__ : Created a barebones flask website to run locally, implemented a feature that shows error codes coming from spotify's api, and researched on how to deploy to firebase. 
-      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
    * __Leon__ : I implemented the OAuth login and handled the OAuth callback process. I also worked with Caden to store the access token securely. In addition, I developed the OAuth request and redirect endpoints and integrated the login display into the home.html page.
-      * [Jira Task Documentation](./Documentation/Sprint1-Jira.md)
    * __Mateo__ : Researched and implemented the map API. Ensured map displayed current user location, can scroll, and zoom in and out of map. Also made sure user can add pins to map and the pin(s) are displayed. 
 
 * __Future Implementation__
@@ -111,20 +106,17 @@ For this sprint our main focus was to create the website, communicate with spoti
 
 For this sprint our main focus was to create the website, communicate with spotify api, and create a map.
 
-* [__Retrospective__](./Documentation/Sprint2-Retrospective.md)
+* [__Retrospective__](./Documentation/Sprint2/Sprint2-Retrospective.md)
 
-* __Burnup Report:__ ![Sprint2-Burnup](BURNUP PNG GOES HERE)
+* __Burnup Report:__ ![Sprint2-Burnup](./Documentation/Sprint2/Sprint2-Burnup.png)
 
 * __Contributions__
+   * [Jira Task Documentation](./Documentation/Sprint2/Sprint2-Jira.md)
 
    * __Caden__ : I set up the host environment in Google Cloud, created the database, and implemented functionality to send song information to the database.
-      * [Jira Task Documentation](./Documentation/Sprint2-Jira.md)
    * __Devin__ : I merged all the different webpages we had into one homepage, fixed the visuals for the pin song information that was displayed, and redesigned the UI for the homepage for a polished look.
-      * [Jira Task Documentation](./Documentation/Sprint2-Jira.md)
    * __Jacob__ : 
-      * [Jira Task Documentation](ADD LINK)
    * __Leon__ : Implemented handling song info on map pins including the location as well as having a mock account setup. Displayed the user profile info on the top bar showing the users profile pic as well as the username.
-      * [Jira Task Documentation](ADD LINK)
    * __Mateo__ : I researched the lifetime of our pins in our map. I determined why/when they expired and how to ensure that their lifetime did not expire.  I created a document that contained my research and attached it to the given task. I also created/started working on our unit and integration tests.
 
 * __Future Implementation__

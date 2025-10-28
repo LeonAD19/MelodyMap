@@ -25,9 +25,9 @@
 
 ### Jacob
 * [MM-64 Jacob - Code Cleanup](https://cs3398-enceladus-fall.atlassian.net/browse/MM-64)
-* [MM-70 Fetch and display track title and artist] (https://cs3398-enceladus-fall.atlassian.net/browse/MM-70)
-* [MM-74 Add album thumbnail with fetched tracks from user] (https://cs3398-enceladus-fall.atlassian.net/browse/MM-74) 
-* [MM-75 Update when songs play] (https://cs3398-enceladus-fall.atlassian.net/browse/MM-75)
+* [MM-70 Fetch and display track title and artist](https://cs3398-enceladus-fall.atlassian.net/browse/MM-70)
+* [MM-74 Add album thumbnail with fetched tracks from user](https://cs3398-enceladus-fall.atlassian.net/browse/MM-74) 
+* [MM-75 Update when songs play](https://cs3398-enceladus-fall.atlassian.net/browse/MM-75)
 
 
 ### Leon
