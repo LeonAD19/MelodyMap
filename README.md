@@ -103,7 +103,7 @@ For this sprint our main focus was to create the website, communicate with spoti
 # Sprint 2 Review
 
 ### Demo
-We demoed the devleop branch
+We demoed the develop branch
 
 ### Review and Retrospective
 
