@@ -102,6 +102,9 @@ For this sprint our main focus was to create the website, communicate with spoti
 
 # Sprint 2 Review
 
+### Demo
+We demoed the devleop branch
+
 ### Review and Retrospective
 
 For this sprint our main focus was to host the website, create and use a database, and overhaul the UI.
