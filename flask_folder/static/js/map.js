@@ -27,12 +27,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const { latitude, longitude } = pos.coords;
         map.setView([latitude, longitude], 15);
 
-        // Show 1-mile radius + marker
-        L.circle([latitude, longitude], { radius: 1609.34 }).addTo(map);
-        L.marker([latitude, longitude])
-          .addTo(map)
-          .bindPopup("<b>You are here</b>")
-          .openPopup();
+        // Show 100 meter radius + marker
+        L.circle([latitude, longitude], { radius: 100 }).addTo(map);
+
+        // Display currently playing song in center of map
+        // Check immediately, then every 5 seconds
+        updateMyLocationPin(latitude, longitude);
+        setInterval(() => updateMyLocationPin(latitude, longitude), 5000);
+
       },
       // On error: use fallback center (MM-45)
       () => {
@@ -73,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const marker = L.marker([latitude, longitude]).addTo(map);
         window.songMarkers.push(marker);
 
-        const popupHTML = getPinHtml(album_art, song_title, artist_name, lat, lng)
+        const popupHTML = getPinHtml(album_art, song_title, artist_name, lat, lng);
         // Attach popup to marker
         marker.bindPopup(popupHTML);
       });
@@ -81,49 +83,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Handle any errors that occur during fetch or processing
     .catch(err => console.error("Failed to fetch songs:", err));
-}
+  }
 
-    // After initial fetch, refrsh every 15 seconds
+    // After initial fetch, refresh every 15 seconds
     fetchAndRenderSongs();
     setInterval(fetchAndRenderSongs, 15000);
 
-  // --- Click to drop pins ---
-  map.on("click", async (e) => {
-  const { lat, lng } = e.latlng;
-  const marker = L.marker([lat, lng]).addTo(map);
+  let myLocationMarker = null;
+  async function updateMyLocationPin (lat, lng) {
 
-  try {
-    const res = await fetch(`/spotify/now_playing?lat=${lat}&lng=${lng}&_=${Date.now()}`);
-    // Parse JSON rather than just getting ALL the text
-    const data = await res.json();
-    if(!data.authorized) {
-      marker
-        .bindPopup(`<b>You are not logged in!</b>
-          <br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
-        .openPopup();
-      return;
+    // Remove old marker if it exists
+    if (myLocationMarker) {
+      map.removeLayer(myLocationMarker);
     }
-     
-    if (!data.playing) {
-      marker
-        .bindPopup(`<b>No song currently playing!</b>
-          <br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
-        .openPopup();
-      return;
-    }
-    const song = data.playing;
-    // Create HTML for the popup
-    const html = getPinHtml(song.art, song.name, song.artists, lat, lng)
+    
+    myLocationMarker = L.marker([lat, lng]).addTo(map);
 
-    marker.bindPopup(html).openPopup();
-  } catch (err) {
-    console.error("Error fetching song info:", err);
-    marker
-      .bindPopup(`<b>Could not load song info</b><br>
-                  <small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
-      .openPopup();
-  }
-});
+    try {
+      const res = await fetch(`/spotify/now_playing?lat=${lat}&lng=${lng}&_=${Date.now()}`);
+      // Parse JSON rather than just getting ALL the text
+      const data = await res.json();
+
+      if(!data.authorized) {
+        myLocationMarker
+          .bindPopup(`<b>You are not logged in!</b>
+            <br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
+          .openPopup();
+        return;
+      }
+      
+      if (!data.playing) {
+        myLocationMarker
+          .bindPopup(`<b>No song currently playing!</b>
+            <br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
+          .openPopup();
+        return;
+      }
+      const song = data.playing;
+      // Create HTML for the popup
+      const html = getPinHtml(song.art, song.name, song.artists, lat, lng);
+
+      myLocationMarker.bindPopup(html).openPopup();
+    } catch (err) {
+      console.error("Error fetching song info:", err);
+      myLocationMarker
+        .bindPopup(`<b>Could not load song info</b><br>
+                    <small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
+        .openPopup();
+    }
+  };
   // ---------------------------
   // Lazy refetch hook (placeholder for backend integration)
   // ---------------------------
