@@ -35,7 +35,6 @@
           <img src="{{ url_for('static', filename='spotifylogo.png') }}" alt="Spotify Logo" />
         {% endif %}
       </div>
-
       <div class="container">
         <h1 class="logo">Melody Map</h1>
         <nav>
@@ -48,6 +47,15 @@
             {% endif %}
           </ul>
         </nav>
+      </div>
+      <div id="settings-container" class="settings-container">
+        <button id="settings-btn" class="settings-btn" title="Settings">⚙️</button>
+        <div id="settings-popup" class="settings-popup hidden">
+          <h3>Settings</h3>
+          <button id="pref-dark">Toggle Dark Mode</button>
+          <button id="pref-map">Change Map Style</button>
+          <button id="pref-reset">Reset Preferences</button>
+        </div>
       </div>
     </header>
 

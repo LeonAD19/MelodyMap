@@ -1,6 +1,44 @@
 // Show profile only after the user clicks Login in THIS TAB.
 // sessionStorage is tab-scoped, so closing the tab clears this flag.
 
+
+// Topbar — Settings Popup
+
+  (function () {
+    const btn = document.getElementById('settings-btn');
+    const popup = document.getElementById('settings-popup');
+    const darkBtn = document.getElementById('pref-dark');
+    const resetBtn = document.getElementById('pref-reset');
+
+    if (!btn || !popup) return;
+
+    // Toggle popup
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.classList.toggle('show');
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!popup.contains(e.target) && !btn.contains(e.target)) {
+        popup.classList.remove('show');
+      }
+    });
+
+    // Placeholder button functions
+    darkBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      popup.classList.remove('show');
+    });
+
+    resetBtn.addEventListener('click', () => {
+      localStorage.clear();
+      alert('Settings reset!');
+      popup.classList.remove('show');
+    });
+  })();
+
+
 (function () {
   const userWrap = document.getElementById('header-user');
   const pic = document.getElementById('header-pic');
