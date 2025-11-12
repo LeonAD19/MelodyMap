@@ -73,11 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const marker = L.marker([latitude, longitude]).addTo(map);
         window.songMarkers.push(marker);
 
-        // Build the popup HTML content that shows when user clicks the marker
-        const popupHTML = `
-          <img src="${album_art}" alt="Album Art" width="100" style="border-radius:10px;margin-bottom:6px;">
-          <div><strong>${song_title || 'Unknown'}</strong> by ${artist_name || 'Unknown'}</div>
-        `;
+        const popupHTML = getPinHtml(album_art, song_title, artist_name, lat, lng)
         // Attach popup to marker
         marker.bindPopup(popupHTML);
       });
@@ -117,16 +113,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const song = data.playing;
     // Create HTML for the popup
-    const html = `
-      <div class="spotify-pin">
-        <img src="${song.art}" alt="Album Art" />
-        <div class="track-info">
-          <strong class="track-title">${song.name}</strong><br>
-          <span class="artist">${song.artists}</span><br>
-        </div>
-        <small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>
-      </div>
-    `;
+    const html = getPinHtml(song.art, song.name, song.artists, lat, lng)
+
     marker.bindPopup(html).openPopup();
   } catch (err) {
     console.error("Error fetching song info:", err);
@@ -153,3 +141,48 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize
   centerMap();
 });
+
+// This function should be called when displaying song info (successfully)
+// Includes defensive checks to explicitly show which fields are invalid/missing
+function getPinHtml(songImg, songName, songArtist, lat, lng) {
+  // Check for missing/invalid data and collect error messages
+  const errors = [];
+
+  if (!songImg || typeof songImg !== 'string') {
+    errors.push('Image URL not set');
+  }
+  if (!songName || typeof songName !== 'string' || songName == 'Unknown') {
+    errors.push('Song name not set');
+  }
+  if (!songArtist || typeof songArtist !== 'string' || songArtist == 'Unknown') {
+    errors.push('Artist name not set');
+  }
+  if (!lat || typeof lat !== 'number' || !Number.isFinite(lat)) {
+    errors.push('Invalid latitude');
+  }
+  if (!lng || typeof lng !== 'number' || !Number.isFinite(lng)) {
+    errors.push('Invalid longitude');
+  }
+
+  // If there are errors, show them prominently
+  if (errors.length > 0) {
+    return `
+      <div class="spotify-pin">
+          ERROR displaying pin:<br>
+          ${errors.join('<br>')}
+      </div>
+    `;
+  }
+
+  // All data is valid, render normally
+  return `
+      <div class="spotify-pin">
+        <img src="${songImg}" alt="Album Art" />
+        <div class="track-info">
+          <strong class="track-title">${songName}</strong><br>
+          <span class="artist">${songArtist}</span><br>
+        </div>
+        <small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>
+      </div>
+    `
+}
