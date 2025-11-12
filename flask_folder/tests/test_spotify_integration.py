@@ -8,16 +8,14 @@ import pytest
 @pytest.fixture
 def app(monkeypatch):
     """
-    Use your real create_app(), but set env FIRST so any imports
-    inside flask_folder see proper values. Also provide a secret key.
+    Use the real app factory so all blueprints are registered.
+    Set env BEFORE importing create_app so spotify modules read proper values.
     """
-    # 1) Set env BEFORE importing app factory
     monkeypatch.setenv("SPOTIFY_CLIENT_ID", "test_client_id")
     monkeypatch.setenv("SPOTIFY_CLIENT_SECRET", "test_client_secret")
     monkeypatch.setenv("SPOTIFY_REDIRECT_URI", "http://localhost/callback")
     monkeypatch.setenv("FLASK_SECRET_KEY", "test-secret")
 
-    # 2) Now import and build the real app
     from flask_folder import create_app
     app = create_app()
     app.config.update(TESTING=True, WTF_CSRF_ENABLED=False)
@@ -34,7 +32,7 @@ def test_spotify_login_redirect(client):
     assert "accounts.spotify.com" in (resp.location or "").lower()
 
 def test_spotify_callback_flow_mocked(client, monkeypatch):
-    """Mock Spotify token exchange in full app context."""
+    """Mock Spotify token exchange end-to-end in the full app context."""
     class FakeResp:
         status_code = 200
         def json(self):
@@ -44,10 +42,8 @@ def test_spotify_callback_flow_mocked(client, monkeypatch):
                 "expires_in": 3600
             }
 
-    # Patch requests.post inside spotify_routes
-    import flask_folder.spotify_routes as sr
+    import flask_folder.spotify.spotify_routes as sr
     monkeypatch.setattr(sr.requests, "post", lambda url, data=None, headers=None: FakeResp())
 
     resp = client.get("/callback?code=abc123")
     assert resp.status_code in (200, 302, 307)
-
