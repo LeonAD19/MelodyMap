@@ -1,0 +1,247 @@
+/* ============================================
+   PLAYER CARD GRID
+   Handles card layout and selection states.
+   ============================================ */
+.card-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.card-option {
+  position: relative;
+  padding: 20px;
+  background: #2a2a2a;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.card-option:hover {
+  border-color: #1DB954;
+  background: #333;
+  transform: translateX(4px);
+}
+
+/* Selected card state */
+.card-option.selected {
+  border-color: #1DB954;
+  background: #2d3a2d;
+  box-shadow: 0 0 16px rgba(29, 185, 84, 0.3);
+}
+
+/* Checkmark on selected card */
+.card-option.selected::before {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: #1DB954;
+  font-weight: bold;
+}
+
+/* Card text */
+.card-option-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.card-option-desc {
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.4;
+}
+
+
+/* ============================================
+   PLAYER CARD STYLES
+   Applies appearance based on selected card ID.
+   ============================================ */
+
+/* Simple Card Style */
+.user-card.card-simple {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.user-card.card-simple .user-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.user-card.card-simple .user-artist {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Compact Card Style */
+.user-card.card-compact {
+  background: #2a2a2a;
+  padding: 10px;
+  border-radius: 4px;
+  border-left: 4px solid #F39C12;
+  min-width: 180px;
+}
+
+.user-card.card-compact .user-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.user-card.card-compact .user-artist {
+  font-size: 11px;
+  color: #aaa;
+}
+
+/* Spotify Style Card */
+.user-card.card-spotify {
+  background: #1DB954;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(29, 185, 84, 0.4);
+}
+
+.user-card.card-spotify .user-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.user-card.card-spotify .user-artist {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.user-card.card-spotify::before {
+  content: '♫';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 20px;
+  opacity: 0.3;
+}
+
+
+/* ============================================
+   PLAYER CARD STYLES FOR TOPBAR PROFILE
+   ============================================ */
+   
+/* Default state no card selected */
+#header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+/* When .card-simple class is added */
+#header-user.card-simple {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 10px 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+#header-user.card-simple #header-name {
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Compact Card Style - Dark with Orange Border */
+#header-user.card-compact {
+  background: #2a2a2a;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 2px solid #F39C12;
+  box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+}
+
+#header-user.card-compact #header-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #F39C12;
+}
+
+#header-user.card-compact .header-pic {
+  border: 2px solid #F39C12;
+}
+
+#header-user.card-spotify {
+  background: #1DB954;
+  padding: 10px 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(29, 185, 84, 0.6);
+  animation: spotifyPulse 3s ease-in-out infinite; 
+}
+
+#header-user.card-spotify #header-name {
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+#header-user.card-spotify .header-pic {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+/* Spotify pulse animation */
+@keyframes spotifyPulse {
+  0%, 100% { box-shadow: 0 4px 16px rgba(29, 185, 84, 0.6); }
+  50% { box-shadow: 0 6px 24px rgba(29, 185, 84, 0.9); }
+}
+
+/* Neon Card Style Glow */
+#header-user.card-neon {
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 2px solid #00ffff;
+  box-shadow: 
+    0 0 10px #00ffff,
+    0 0 20px #00ffff,
+    0 0 30px #00ffff,
+    inset 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+#header-user.card-neon #header-name {
+  color: #00ffff;
+  text-shadow: 0 0 10px #00ffff;
+  font-weight: 600;
+}
+
+#header-user.card-neon .header-pic {
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 15px #00ffff;
+}
+
+/* Glass Morphism Card */
+#header-user.card-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+#header-user.card-glass #header-name {
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#header-user.card-glass .header-pic {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}

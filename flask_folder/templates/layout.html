@@ -5,9 +5,13 @@
     <title>Melody Map</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <!--profile.css: top bar (avatar/name) styles implemented-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/side-panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/avatar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/playerCard.css') }}">
+
+
 
     <link
       rel="stylesheet"
@@ -55,6 +59,8 @@
           <h3>Settings</h3>
           <button id="toggle-theme" class="theme-toggle">☾</button>
           <button id="pref-colors">Change User Colors</button>
+           <button id="pref-avatar" class="settings-popup-btn"> Change Avatar</button>
+           <button id="pref-card" class="settings-popup-btn">Change Player Card</button>
           <button id="pref-reset">Reset Preferences</button>
         </div>
       </div>
@@ -62,6 +68,34 @@
 
     <div class="container">
       {% block content %}{% endblock %}
+    </div>
+
+    <!-- Avatar Selection Modal -->
+    <div id="avatar-modal" class="modal hidden">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Choose Your Avatar</h3>
+          <button id="avatar-close" class="modal-close">&times;</button>
+        </div>
+        <div id="avatar-grid" class="avatar-grid">
+          <!-- Loaded by JS from /spotify/avatars -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Player Card Selection Modal -->
+    <div id="card-modal" class="modal hidden">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Choose Player Card Style</h3>
+          <button id="card-close" class="modal-close">&times;</button>
+        </div>
+        <div id="card-grid" class="card-grid">
+          <!-- Loaded by JS from /spotify/player_cards -->
+        </div>
+      </div>
     </div>
     
     <!-- Top bar script (loads profile once) -->

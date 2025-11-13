@@ -90,22 +90,18 @@ def logout():
 
 # User preferences collection
 def get_available_avatars():
-    """
-    Return selectable avatars (id + url). Put files under:
-    flask_folder/static/img/avatars/
-    """
     return [
-        {"id": "avatar-default-1", "url": "/static/img/avatars/default1.png"},
-        {"id": "avatar-default-2", "url": "/static/img/avatars/default2.png"},
-        {"id": "avatar-default-3", "url": "/static/img/avatars/default3.png"},
+        {"id": "GP1", "url": "/static/img/avatars/GP1.jpeg", "name": "Avatar 1"},
+        {"id": "GP2", "url": "/static/img/avatars/GP2.jpeg", "name": "Avatar 2"},
+        {"id": "GP3", "url": "/static/img/avatars/GP3.jpeg", "name": "Avatar 3"},
+        {"id": "GP4", "url": "/static/img/avatars/GP4.jpeg", "name": "Avatar 4"},
+        {"id": "GP5", "url": "/static/img/avatars/GP5.jpeg", "name": "Avatar 5"},
+        {"id": "GP6", "url": "/static/img/avatars/GP6.jpeg", "name": "Avatar 6"},
     ]
 
 def get_available_player_cards():
-    """
-    Return a catalog of player-card templates users can select.
-    """
     return [
-        {"id": "card-simple", "name": "Simple Card"},
+        {"id": "card-simple", "name": "Colorful Card"},
         {"id": "card-compact", "name": "Compact Card"},
         {"id": "card-spotify", "name": "Spotify Style"},
     ]

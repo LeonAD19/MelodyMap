@@ -1,0 +1,105 @@
+/* ============================================
+   MODAL BASE STYLES
+   ============================================ */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+/* When modal is visible */
+.modal:not(.hidden) {
+  display: flex;
+}
+
+/* Dark transparent overlay behind modal */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+}
+
+/* Main modal window container */
+.modal-content {
+  position: relative;
+  background: #1e1e1e;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+  animation: slideUp 0.3s ease;
+}
+
+/* Modal title row */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #333;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #1DB954;
+  font-size: 20px;
+}
+
+/* Modal close button */
+.modal-close {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.modal-close:hover {
+  background: #333;
+  color: #fff;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

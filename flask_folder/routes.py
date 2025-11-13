@@ -55,11 +55,13 @@ def queue_track_route():
     track_id = payload.get('track_id')
     return queue_track(track_id)
 
+# Returns the full list of selectable avatars
 @spotify_api.route('/avatars')
 def avatars():
     from .spotify.spotify_routes import get_available_avatars
     return jsonify(get_available_avatars())
 
+# Returns all available player card styles (themes)
 @spotify_api.route('/player_cards')
 def player_cards():
     from .spotify.spotify_routes import get_available_player_cards
