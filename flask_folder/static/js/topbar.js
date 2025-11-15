@@ -68,7 +68,7 @@
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data && data.username) {
-        if (pic) pic.src = data.profile_pic || '/static/img/default-avatar.png';
+        if (pic) pic.src = data.profile_pic || '/static/img/avatars/default-avatar.png';
         if (name) name.textContent = data.username || 'Spotify User';
         if (userWrap) userWrap.style.display = 'flex';
       } else {

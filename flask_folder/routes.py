@@ -46,3 +46,12 @@ def get_songs():
     songs = get_songs_from_db()
     return jsonify(songs)
 
+@spotify_api.route('/avatars')
+def avatars():
+    from .spotify.spotify_routes import get_available_avatars
+    return jsonify(get_available_avatars())
+
+@spotify_api.route('/player_cards')
+def player_cards():
+    from .spotify.spotify_routes import get_available_player_cards
+    return jsonify(get_available_player_cards())

@@ -87,3 +87,25 @@ def logout():
     clear_tokens()
     flash("Logged out of Spotify.", "info")
     return redirect(url_for('routes.home'))
+
+# User preferences collection
+def get_available_avatars():
+    """
+    Return selectable avatars (id + url). Put files under:
+    flask_folder/static/img/avatars/
+    """
+    return [
+        {"id": "avatar-default-1", "url": "/static/img/avatars/default1.png"},
+        {"id": "avatar-default-2", "url": "/static/img/avatars/default2.png"},
+        {"id": "avatar-default-3", "url": "/static/img/avatars/default3.png"},
+    ]
+
+def get_available_player_cards():
+    """
+    Return a catalog of player-card templates users can select.
+    """
+    return [
+        {"id": "card-simple", "name": "Simple Card"},
+        {"id": "card-compact", "name": "Compact Card"},
+        {"id": "card-spotify", "name": "Spotify Style"},
+    ]
