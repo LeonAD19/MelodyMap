@@ -7,11 +7,44 @@
 document.addEventListener("DOMContentLoaded", function () {
   const map = L.map("map");
   // OSM tiles
-  L.tileLayer("https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", {
-  maxZoom: 20,
-  attribution:
-    '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>, &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+  //light mode
+  const darkLayer = L.tileLayer(
+    "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
+    {
+      maxZoom: 20,
+      attribution:
+        '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>, &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }
+  );
+  //dark mode
+  const lightLayer = L.tileLayer(
+    "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
+    {
+      maxZoom: 20,
+      attribution:
+        '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>, &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }
+  );
+  darkLayer.addTo(map);
+
+  // --- TOGGLE BUTTON LOGIC ---
+  let isDark = true;
+
+document.getElementById("toggle-theme").addEventListener("click", () => {
+  const btn = document.getElementById("toggle-theme");
+
+  if (isDark) {
+    map.removeLayer(darkLayer);
+    lightLayer.addTo(map);
+    btn.textContent = "☀︎"; // switch to sun
+  } else {
+    map.removeLayer(lightLayer);
+    darkLayer.addTo(map);
+    btn.textContent = "☾"; // switch back to moon
+  }
+
+  isDark = !isDark;
+});
 
   
   // Fallback center (Texas State vicinity)
