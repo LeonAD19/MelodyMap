@@ -72,3 +72,62 @@ def test_callback_with_code_mocks_token_exchange(client, monkeypatch):
     resp = client.get("/callback?code=fakecode123")
     # Depending on implementation, callback may return a success page or a redirect
     assert resp.status_code in (200, 302, 307)
+
+# ------------------ MM-80 UNIT TESTS  ------------------
+from urllib.parse import urlparse, parse_qs
+
+def test_login_builds_correct_query_params(client):
+    """
+    /login should redirect to Spotify with the expected query parameters.
+    """
+    resp = client.get("/login")
+    assert resp.status_code in (302, 307)
+    loc = resp.location or ""
+    parsed = urlparse(loc)
+    assert parsed.netloc.endswith("accounts.spotify.com")
+    assert parsed.path.strip("/") == "authorize"
+
+    qs = parse_qs(parsed.query)
+    # response_type=code
+    assert qs.get("response_type", [""])[0] == "code"
+    # client_id present (value is from env, we only assert it's non-empty)
+    assert qs.get("client_id", [""])[0] != ""
+    # redirect_uri present
+    assert qs.get("redirect_uri", [""])[0] != ""
+    # scope contains user-read-currently-playing
+    assert "user-read-currently-playing" in qs.get("scope", [""])[0]
+
+def test_callback_error_sets_flash_and_redirects(client):
+    """
+    If Spotify returns ?error=..., the route should flash and redirect.
+    We can't see the flash text without a template, but we can assert session has flashes.
+    """
+    resp = client.get("/callback?error=access_denied")
+    assert resp.status_code in (302, 307)
+
+    # Confirm a flash was queued in session
+    with client.session_transaction() as sess:
+        # Flask stores flashes under '_flashes' list of (category, message)
+        assert "_flashes" in sess
+        assert len(sess["_flashes"]) >= 1
+
+def test_callback_token_exchange_failure_redirects_and_flashes(client, monkeypatch):
+    """
+    If Spotify token exchange fails (non-200), route should flash and redirect home.
+    """
+    import flask_folder.spotify.spotify_routes as sr
+
+    class BadResp:
+        status_code = 400
+        def json(self):
+            return {"error": "bad_request"}
+
+    monkeypatch.setattr(sr.requests, "post", lambda *a, **k: BadResp())
+
+    resp = client.get("/callback?code=fakecode123")
+    assert resp.status_code in (302, 307)
+
+    with client.session_transaction() as sess:
+        assert "_flashes" in sess
+        assert len(sess["_flashes"]) >= 1
+
