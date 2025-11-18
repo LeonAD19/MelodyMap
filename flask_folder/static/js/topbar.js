@@ -7,7 +7,7 @@
   (function () {
     const btn = document.getElementById('settings-btn');
     const popup = document.getElementById('settings-popup');
-    const darkBtn = document.getElementById('pref-dark');
+    const toggleTheme = document.getElementById('toggle-theme');
     const resetBtn = document.getElementById('pref-reset');
 
     if (!btn || !popup) return;
@@ -26,7 +26,7 @@
     });
 
     // Placeholder button functions
-    darkBtn.addEventListener('click', () => {
+    toggleTheme.addEventListener('click', () => {
       document.body.classList.toggle('dark-mode');
       popup.classList.remove('show');
     });
