@@ -378,3 +378,27 @@ main.main-content {
   opacity: 0.8;
   margin-top: 2px;
 }
+
+/* lgiht and dark mode toggle */
+.theme-toggle {
+  width: 36px;              
+  height: 36px;              
+  border-radius: 50%;        /* makes circle */
+  border: none;
+  background: rgba(0,0,0,0.55);
+  color: white;
+  font-size: 18px;      
+  display: inline-flex !important;    
+  display: flex;
+  justify-content: center;    
+  align-items: center;    
+  padding: 0 !important;   
+  cursor: pointer;
+  transition: 0.2s ease;             
+}
+
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.1);
+}
+
