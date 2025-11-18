@@ -30,13 +30,17 @@ else:
         expireAfterSeconds=SONG_RECORD_TTL_SECONDS
     )
 
-def send_song_info(user_uuid: str, name: str, artist: str, album_art: str, lat: float = None, lng: float = None):
+def send_song_info(user_uuid: str, name: str, artist: str, album_art: str, track_ID: str, lat: float = None, lng: float = None):
     if song_collection is None:
         logger.error("Cannot send song info: MongoDB connection not available.")
         return
 
     if user_uuid is None or name is None:
         logger.error(f"send_song_info called with invalid params: uuid={user_uuid}, name={name}")
+        return
+    
+    if track_ID is None or track_ID == '':
+        logger.error('send_song_info is called with invalid trackID: {track_ID}')
         return
 
     # If user has some song
@@ -48,6 +52,7 @@ def send_song_info(user_uuid: str, name: str, artist: str, album_art: str, lat: 
         "name": name,
         "artist": artist,
         "album_art": album_art,
+        "trackID": track_ID,
         "createdAt": created_at
     }
 
@@ -112,6 +117,7 @@ def get_songs_from_db():
             "song_title": song.get("name", "Unknown"),
             "artist_name": song.get("artist", "Unknown"),
             "album_art": song.get("album_art"),
+            "track_ID": song.get('track_ID'),
             "lat": lat_float,
             "lng": lng_float,
         })

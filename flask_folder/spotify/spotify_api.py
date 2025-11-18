@@ -74,7 +74,7 @@ def now_playing(lat: float, lng: float):
     artists = ', '.join(a.get('name', '') for a in item.get('artists', [])) or 'Unknown'
     
     from .spotify_dao import send_song_info
-    send_song_info(session['uuid'], item.get('name'), artists, album_images[0].get('url'), lat=lat, lng=lng)
+    send_song_info(user_uuid=session['uuid'], name=item.get('name'), artist=artists, album_art=album_images[0].get('url'), track_ID=item.get('id'), lat=lat, lng=lng)
 
     # Return song details
     return jsonify({
@@ -87,6 +87,7 @@ def now_playing(lat: float, lng: float):
             "is_playing": payload.get('is_playing', False),
             "progress_ms": payload.get('progress_ms'),
             "duration_ms": item.get('duration_ms'),
+            "track_ID": item.get('id'),
         }
     })
     

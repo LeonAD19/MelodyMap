@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Loop through each song from the database and create a marker
       users.forEach(user => {
-        const { username, song_title, artist_name, album_art, lat, lng } = user;
+        const { username, song_title, artist_name, album_art, track_ID, lat, lng } = user;
         // Parse latitude and longitude to ensure they are numbers (not strings)
         const latitude = parseFloat(lat);
         const longitude = parseFloat(lng);
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const marker = L.marker([latitude, longitude]).addTo(map);
         window.songMarkers.push(marker);
 
-        const popupHTML = getPinHtml(album_art, song_title, artist_name, lat, lng);
+        const popupHTML = getPinHtml(album_art, song_title, artist_name, track_ID, lat, lng);
         // Attach popup to marker
         marker.bindPopup(popupHTML);
       });
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       const song = data.playing;
       // Create HTML for the popup
-      const html = getPinHtml(song.art, song.name, song.artists, lat, lng);
+      const html = getPinHtml(song.art, song.name, song.artists, song.track_ID, lat, lng);
 
       myLocationMarker.bindPopup(html).openPopup();
     } catch (err) {
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // This function should be called when displaying song info (successfully)
 // Includes defensive checks to explicitly show which fields are invalid/missing
-function getPinHtml(songImg, songName, songArtist, lat, lng) {
+function getPinHtml(songImg, songName, songArtist, track_ID, lat, lng) {
   // Check for missing/invalid data and collect error messages
   const errors = [];
 
