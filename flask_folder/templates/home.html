@@ -39,6 +39,7 @@
   <script>
     window.SPOTIFY_AUTH = {{ 'true' if user_auth else 'false' }};
   </script>
+  <script src="{{ url_for('static', filename='js/side-panel.js') }}"></script>
   <script src="{{ url_for('static', filename='js/map.js') }}"></script>
   <script src="{{ url_for('static', filename='js/user.js') }}"></script>
 {% endblock %}

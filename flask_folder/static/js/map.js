@@ -111,6 +111,12 @@ document.getElementById("toggle-theme").addEventListener("click", () => {
         const popupHTML = getPinHtml(album_art, song_title, artist_name, track_ID, lat, lng);
         // Attach popup to marker
         marker.bindPopup(popupHTML);
+
+        // Open side panel when marker is clicked
+        marker.on('click', () => {
+          const spotifyEmbedUrl = `https://open.spotify.com/embed/track/${track_ID}`;
+          openSidePanel(spotifyEmbedUrl);
+        });
       });
     })
 
@@ -153,10 +159,24 @@ document.getElementById("toggle-theme").addEventListener("click", () => {
         return;
       }
       const song = data.playing;
-      // Create HTML for the popup
-      const html = getPinHtml(song.art, song.name, song.artists, song.track_ID, lat, lng);
+      // Store track ID for click handler (closure issue workaround)
+      const track_ID = song.track_ID;
 
-      myLocationMarker.bindPopup(html).openPopup();
+      // Create HTML for the popup
+      const html = getPinHtml(song.art, song.name, song.artists, track_ID, lat, lng);
+
+      myLocationMarker.bindPopup(html);
+
+      // Open side panel when user's location marker is clicked
+      myLocationMarker.on('click', () => {
+        console.debug('Location marker clicked, track_ID:', track_ID);
+        if (track_ID) {
+          const spotifyEmbedUrl = `https://open.spotify.com/embed/track/${track_ID}`;
+          openSidePanel(spotifyEmbedUrl);
+        } else {
+          console.error('No track ID available for this song');
+        }
+      });
     } catch (err) {
       console.error("Error fetching song info:", err);
       myLocationMarker

@@ -40,7 +40,7 @@ def send_song_info(user_uuid: str, name: str, artist: str, album_art: str, track
         return
     
     if track_ID is None or track_ID == '':
-        logger.error('send_song_info is called with invalid trackID: {track_ID}')
+        logger.error(f'send_song_info is called with invalid track_ID: {track_ID}')
         return
 
     # If user has some song
@@ -52,7 +52,7 @@ def send_song_info(user_uuid: str, name: str, artist: str, album_art: str, track
         "name": name,
         "artist": artist,
         "album_art": album_art,
-        "trackID": track_ID,
+        "track_ID": track_ID,
         "createdAt": created_at
     }
 
