@@ -128,6 +128,57 @@ document.getElementById("toggle-theme").addEventListener("click", () => {
     fetchAndRenderSongs();
     setInterval(fetchAndRenderSongs, 15000);
 
+  // add event listener for queue buttons in popups
+  document.addEventListener('click', (event) => {
+    // Check if the clicked element is a queue button or inside one
+    const queueButton = event.target.closest('.queue-track-btn');
+    if (!queueButton) return;
+
+    // Handle the queue button click
+    event.preventDefault();
+    
+    // Get track ID from data attribute reads dataset from HTML5 data-* attributes 
+    const track_Id = queueButton.dataset.trackId;
+    queueTrackFromPin(track_Id, queueButton);
+  });
+
+// Queue a track from a pin/button on the UI
+ // Function to queue track via backend API
+  async function queueTrackFromPin(track_Id, sourceButton) {
+    if (!track_Id) return;
+
+    // Update UI to show queuing status 
+    // Find the queue status label within the same pin
+    const queueStatusLabel  = sourceButton?.closest('.spotify-pin')?.querySelector('.queue-status');
+
+    // show queuing status
+    if (queueStatusLabel) queueStatusLabel.textContent = 'Queuing.';
+
+    // await backend API call to queue the track
+    try {
+      // Send POST request to backend to queue the track
+      const res = await fetch('/spotify/queue', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ track_id: track_Id })
+      });
+      const data = await res.json().catch(() => ({}));
+
+      // if successful response from backend show that it was queued
+      if (res.ok && data.ok !== false) {
+        if (queueStatusLabel) queueStatusLabel.textContent = 'Queued on your player';
+        return;
+      }
+
+      // if error response from backend show the error message
+      const errorText = data.error || 'Unable to queue track';
+      if (queueStatusLabel) queueStatusLabel.textContent = errorText;
+    } catch (err) {
+      console.error('Network error while queuing track:', err); // log error to console 
+      if (queueStatusLabel) queueStatusLabel.textContent = 'Network error while queuing';
+    }
+  }
+
   let myLocationMarker = null;
   async function updateMyLocationPin (lat, lng) {
 
@@ -218,6 +269,9 @@ function getPinHtml(songImg, songName, songArtist, track_ID, lat, lng) {
   if (!songArtist || typeof songArtist !== 'string' || songArtist == 'Unknown') {
     errors.push('Artist name not set');
   }
+  if (!track_ID || typeof track_ID !== 'string') {
+    errors.push('Track ID not set');
+  }
   if (!lat || typeof lat !== 'number' || !Number.isFinite(lat)) {
     errors.push('Invalid latitude');
   }
@@ -244,6 +298,10 @@ function getPinHtml(songImg, songName, songArtist, track_ID, lat, lng) {
           <span class="artist">${songArtist}</span><br>
         </div>
         <small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>
+        <div class="pin-actions">
+          <button class="queue-track-btn" data-track-id="${track_ID}">Queue</button>
+          <span class="queue-status" aria-live="polite"></span>
+        </div>
       </div>
     `
 }

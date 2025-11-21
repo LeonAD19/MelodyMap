@@ -90,6 +90,48 @@ def now_playing(lat: float, lng: float):
             "track_ID": item.get('id'),
         }
     })
+
+# Purpose: Queue a track for the authenticated Spotify User
+def queue_track(track_id: str, device_id: str | None = None): # if device_id is None, Spotify will choose the device
+    # Validate input
+    if not track_id:
+        return jsonify({"error": "Missing track ID"}), 400
+
+    # Get access token    
+    token = get_access_token()
+    if not token:
+        return jsonify({"error": "Missing access token"}), 401
+
+    # Make request to Spotify API to queue the track
+    headers = {"Authorization": f"Bearer {token}"}
+    params = {"uri": f"spotify:track:{track_id}"}
+    
+    # Include device_id if provided
+    if device_id:
+        params["device_id"] = device_id
+    # Send the request
+    try:
+        resp = requests.post(
+            "https://api.spotify.com/v1/me/player/queue",
+            headers=headers,
+            params=params,
+            timeout=10
+        )
+    # Handle network errors
+    except requests.RequestException:
+        return jsonify({"error": "Could not reach Spotify"}), 503
+
+    # If 204 No Content, return OK
+    if resp.status_code == 204:
+        return jsonify({"ok": True}), 200
+
+    # If auth error, clear tokens
+    if resp.status_code in (401, 403):
+        clear_tokens()
+
+    # Handle other errors
+    message = SPOTIFY_ERROR_MESSAGES.get(resp.status_code, "Failed to queue track.")
+    return jsonify({"error": message}), resp.status_code
     
 # Purpose: Return if Authenticated Spotify User is logged in
 def is_logged_in() -> True | False:

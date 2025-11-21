@@ -19,7 +19,7 @@ SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
 CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
 REDIRECT_URI = os.getenv('SPOTIFY_REDIRECT_URI')
-SCOPE = "user-read-currently-playing"
+SCOPE = "user-read-currently-playing user-modify-playback-state"   
 
 # === LOGIN ROUTE ===
 @spotify_bp.route('/login')

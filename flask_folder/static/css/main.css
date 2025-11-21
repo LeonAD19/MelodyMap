@@ -281,6 +281,43 @@ main.main-content {
   margin-right: auto;    /* center the image */
 }
 
+.spotify-pin .pin-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-start;
+}
+
+.spotify-pin .pin-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.spotify-pin .queue-track-btn {
+  background: #1db954;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.spotify-pin .queue-track-btn:hover {
+  background: #1ed760;
+  transform: translateY(-1px);
+}
+
+.spotify-pin .queue-status {
+  font-size: 0.8em;
+  opacity: 0.85;
+  min-height: 1em;
+}
 
 .spotify-pin .track-title {
   font-weight: 600;

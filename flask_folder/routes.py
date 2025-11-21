@@ -46,6 +46,15 @@ def get_songs():
     songs = get_songs_from_db()
     return jsonify(songs)
 
+@spotify_api.route('/queue', methods=['POST']) # POST route to queue a track
+def queue_track_route():
+    from .spotify.spotify_api import queue_track
+    # Get track_id from JSON body 
+    # If no JSON body, default to empty dict to avoid errors
+    payload = request.get_json(silent=True) or {}
+    track_id = payload.get('track_id')
+    return queue_track(track_id)
+
 @spotify_api.route('/avatars')
 def avatars():
     from .spotify.spotify_routes import get_available_avatars
