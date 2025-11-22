@@ -46,7 +46,6 @@ document.getElementById("toggle-theme").addEventListener("click", () => {
   isDark = !isDark;
 });
 
-  
   // Fallback center (Texas State vicinity)
   const fallback = { lat: 29.888, lng: -97.941, zoom: 14 };
   // --- Geolocation ---
@@ -56,26 +55,16 @@ document.getElementById("toggle-theme").addEventListener("click", () => {
       return;
     }
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+    (pos) => {
         const { latitude, longitude } = pos.coords;
         map.setView([latitude, longitude], 15);
-
-        // Show 100 meter radius + marker
-        L.circle([latitude, longitude], { radius: 100 }).addTo(map);
-
-        // Display currently playing song in center of map
-        // Check immediately, then every 5 seconds
         updateMyLocationPin(latitude, longitude);
         setInterval(() => updateMyLocationPin(latitude, longitude), 5000);
-
-      },
-      // On error: use fallback center (MM-45)
-      () => {
-        map.setView([fallback.lat, fallback.lng], fallback.zoom);
-      },
-      { enableHighAccuracy: true, timeout: 6000 }
+    },
+    () => map.setView([fallback.lat, fallback.lng], fallback.zoom),
+    { enableHighAccuracy: true, timeout: 6000 } 
     );
-  }
+}
 
   // --- Periodic refresh of song markers ---
   function fetchAndRenderSongs() {
@@ -186,13 +175,143 @@ document.getElementById("toggle-theme").addEventListener("click", () => {
     if (myLocationMarker) {
       map.removeLayer(myLocationMarker);
     }
-    
-    myLocationMarker = L.marker([lat, lng]).addTo(map);
+  // add event listener for queue buttons in popups
+  document.addEventListener('click', (event) => {
+    // Check if the clicked element is a queue button or inside one
+    const queueButton = event.target.closest('.queue-track-btn');
+    if (!queueButton) return;
 
+    // Handle the queue button click
+    event.preventDefault();
+    
+    // Get track ID from data attribute reads dataset from HTML5 data-* attributes 
+    const track_Id = queueButton.dataset.trackId;
+    queueTrackFromPin(track_Id, queueButton);
+  });
+
+// Queue a track from a pin/button on the UI
+ // Function to queue track via backend API
+  async function queueTrackFromPin(track_Id, sourceButton) {
+    if (!track_Id) return;
+
+    // Update UI to show queuing status 
+    // Find the queue status label within the same pin
+    const queueStatusLabel  = sourceButton?.closest('.spotify-pin')?.querySelector('.queue-status');
+
+    // show queuing status
+    if (queueStatusLabel) queueStatusLabel.textContent = 'Queuing.';
+
+    // await backend API call to queue the track
     try {
-      const res = await fetch(`/spotify/now_playing?lat=${lat}&lng=${lng}&_=${Date.now()}`);
-      // Parse JSON rather than just getting ALL the text
-      const data = await res.json();
+      // Send POST request to backend to queue the track
+      const res = await fetch('/spotify/queue', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ track_id: track_Id })
+      });
+      const data = await res.json().catch(() => ({}));
+
+      // if successful response from backend show that it was queued
+      if (res.ok && data.ok !== false) {
+        if (queueStatusLabel) queueStatusLabel.textContent = 'Queued on your player';
+        return;
+      }
+
+      // if error response from backend show the error message
+      const errorText = data.error || 'Unable to queue track';
+      if (queueStatusLabel) queueStatusLabel.textContent = errorText;
+    } catch (err) {
+      console.error('Network error while queuing track:', err); // log error to console 
+      if (queueStatusLabel) queueStatusLabel.textContent = 'Network error while queuing';
+    }
+  }
+  //custom pins
+
+const PIN_THEMES = {
+  default: {
+    icon: L.icon({
+    iconUrl: '/static/img/music_note_pin.png',
+    
+    iconSize: [40, 40],       // update to your actual PNG size
+    iconAnchor: [20, 35],     // X,Y pixel that should sit on the coordinate
+    popupAnchor: [0, -35]
+}),
+circleColor: '#121313b2'
+},
+  blue: {
+    icon: L.icon({
+      iconUrl: '/static/img/music_note_pin_blue.png',
+      iconSize: [40, 40],
+      iconAnchor: [20, 35],
+      popupAnchor: [0, -35]
+    }),
+    circleColor: '#3B82F6' // Tailwind blue-500
+  },
+
+  green: {
+    icon: L.icon({
+      iconUrl: '/static/img/music_note_pin_green.png',
+      iconSize: [40, 40],
+      iconAnchor: [20, 35],
+      popupAnchor: [0, -35]
+    }),
+    circleColor: '#22C55E'
+  },
+
+  pink: {
+    icon: L.icon({
+      iconUrl: '/static/img/music_note_pin_pink.png',
+      iconSize: [40, 40],
+      iconAnchor: [20, 35],
+      popupAnchor: [0, -35]
+    }),
+    circleColor: '#EC4899'
+  },
+
+};
+
+// Store current theme
+let currentPinTheme = "default";
+let myLocationMarker = null;
+let myLocationCircle = null;
+
+async function updateMyLocationPin(lat, lng) {
+    // Remove old marker & circle
+    if (myLocationMarker) map.removeLayer(myLocationMarker);
+    if (myLocationCircle) map.removeLayer(myLocationCircle);
+
+    const theme = PIN_THEMES[currentPinTheme];
+    // --- Theme button click handler ---
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".pin-theme-btn");
+  if (!btn) return;
+
+  const newTheme = btn.dataset.theme;
+  if (!PIN_THEMES[newTheme]) return;
+
+  currentPinTheme = newTheme;
+
+  // If location is already on map, update immediately
+  if (myLocationMarker && myLocationCircle) {
+    const latLng = myLocationMarker.getLatLng();
+    updateMyLocationPin(latLng.lat, latLng.lng);
+  }
+});
+
+    // Circle
+    myLocationCircle = L.circle([lat, lng], {
+        radius: 100,
+        color: theme.circleColor,
+        weight: 3
+    }).addTo(map);
+
+    // Marker
+    myLocationMarker = L.marker([lat, lng], { icon: theme.icon }).addTo(map);
+
+    // Fetch now playing song
+    try {
+        const res = await fetch(`/spotify/now_playing?lat=${lat}&lng=${lng}&_=${Date.now()}`);
+        const data = await res.json();
 
       if(!data.authorized) {
         myLocationMarker
@@ -229,13 +348,13 @@ document.getElementById("toggle-theme").addEventListener("click", () => {
         }
       });
     } catch (err) {
-      console.error("Error fetching song info:", err);
-      myLocationMarker
-        .bindPopup(`<b>Could not load song info</b><br>
-                    <small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`)
-        .openPopup();
+        console.error("Error fetching song info:", err);
+        myLocationMarker.bindPopup(`<b>Could not load song info</b>
+            <br><small>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}</small>`).openPopup();
     }
-  };
+}
+
+
   // ---------------------------
   // Lazy refetch hook (placeholder for backend integration)
   // ---------------------------
