@@ -66,11 +66,18 @@ class SidePanel {
   }
 }
 
-// Global function called from map.js
+// Global function called from map.js (only runs in browser)
 // Example: openSidePanel('https://open.spotify.com/embed/track/abc123')
-window.openSidePanel = function(url) {
-  if (!window.sidePanel) {
-    window.sidePanel = new SidePanel();
-  }
-  window.sidePanel.open(url);
-};
+if (typeof window !== 'undefined') {
+  window.openSidePanel = function(url) {
+    if (!window.sidePanel) {
+      window.sidePanel = new SidePanel();
+    }
+    window.sidePanel.open(url);
+  };
+}
+
+// Export for Node.js testing (doesn't affect browser usage)
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { SidePanel };
+}
