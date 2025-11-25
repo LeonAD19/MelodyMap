@@ -45,6 +45,7 @@
         <nav>
           <ul class="menu">
             <li><a href="{{ url_for('routes.home') }}">Home</a></li>
+            <li><a href="{{ url_for('routes.privacy') }}">Privacy</a></li>
             {% if user_auth %}
               <li><a href="{{ url_for('spotify_bp.logout') }}">Logout</a></li>
             {% else %}

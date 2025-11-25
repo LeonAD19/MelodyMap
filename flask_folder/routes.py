@@ -66,3 +66,7 @@ def avatars():
 def player_cards():
     from .spotify.spotify_routes import get_available_player_cards
     return jsonify(get_available_player_cards())
+# privacy page
+@routes.route('/privacy')
+def privacy():
+    return render_template('privacyPage.html')
