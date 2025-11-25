@@ -167,108 +167,50 @@ document.getElementById("toggle-theme").addEventListener("click", () => {
       if (queueStatusLabel) queueStatusLabel.textContent = 'Network error while queuing';
     }
   }
-
-  let myLocationMarker = null;
-  async function updateMyLocationPin (lat, lng) {
-
-    // Remove old marker if it exists
-    if (myLocationMarker) {
-      map.removeLayer(myLocationMarker);
-    }
-  // add event listener for queue buttons in popups
-  document.addEventListener('click', (event) => {
-    // Check if the clicked element is a queue button or inside one
-    const queueButton = event.target.closest('.queue-track-btn');
-    if (!queueButton) return;
-
-    // Handle the queue button click
-    event.preventDefault();
-    
-    // Get track ID from data attribute reads dataset from HTML5 data-* attributes 
-    const track_Id = queueButton.dataset.trackId;
-    queueTrackFromPin(track_Id, queueButton);
-  });
-
-// Queue a track from a pin/button on the UI
- // Function to queue track via backend API
-  async function queueTrackFromPin(track_Id, sourceButton) {
-    if (!track_Id) return;
-
-    // Update UI to show queuing status 
-    // Find the queue status label within the same pin
-    const queueStatusLabel  = sourceButton?.closest('.spotify-pin')?.querySelector('.queue-status');
-
-    // show queuing status
-    if (queueStatusLabel) queueStatusLabel.textContent = 'Queuing.';
-
-    // await backend API call to queue the track
-    try {
-      // Send POST request to backend to queue the track
-      const res = await fetch('/spotify/queue', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ track_id: track_Id })
-      });
-      const data = await res.json().catch(() => ({}));
-
-      // if successful response from backend show that it was queued
-      if (res.ok && data.ok !== false) {
-        if (queueStatusLabel) queueStatusLabel.textContent = 'Queued on your player';
-        return;
-      }
-
-      // if error response from backend show the error message
-      const errorText = data.error || 'Unable to queue track';
-      if (queueStatusLabel) queueStatusLabel.textContent = errorText;
-    } catch (err) {
-      console.error('Network error while queuing track:', err); // log error to console 
-      if (queueStatusLabel) queueStatusLabel.textContent = 'Network error while queuing';
-    }
-  }
   //custom pins
 
-const PIN_THEMES = {
-  default: {
-    icon: L.icon({
-    iconUrl: '/static/img/music_note_pin.png',
-    
-    iconSize: [40, 40],       // update to your actual PNG size
-    iconAnchor: [20, 35],     // X,Y pixel that should sit on the coordinate
-    popupAnchor: [0, -35]
-}),
-circleColor: '#121313b2'
-},
-  blue: {
-    icon: L.icon({
-      iconUrl: '/static/img/music_note_pin_blue.png',
-      iconSize: [40, 40],
-      iconAnchor: [20, 35],
+  const PIN_THEMES = {
+    default: {
+      icon: L.icon({
+      iconUrl: '/static/img/music_note_pin.png',
+      
+      iconSize: [40, 40],       // update to your actual PNG size
+      iconAnchor: [20, 35],     // X,Y pixel that should sit on the coordinate
       popupAnchor: [0, -35]
-    }),
-    circleColor: '#3B82F6' // Tailwind blue-500
+  }),
+  circleColor: '#121313b2'
   },
+    blue: {
+      icon: L.icon({
+        iconUrl: '/static/img/music_note_pin_blue.png',
+        iconSize: [40, 40],
+        iconAnchor: [20, 35],
+        popupAnchor: [0, -35]
+      }),
+      circleColor: '#3B82F6' // Tailwind blue-500
+    },
 
-  green: {
-    icon: L.icon({
-      iconUrl: '/static/img/music_note_pin_green.png',
-      iconSize: [40, 40],
-      iconAnchor: [20, 35],
-      popupAnchor: [0, -35]
-    }),
-    circleColor: '#22C55E'
-  },
+    green: {
+      icon: L.icon({
+        iconUrl: '/static/img/music_note_pin_green.png',
+        iconSize: [40, 40],
+        iconAnchor: [20, 35],
+        popupAnchor: [0, -35]
+      }),
+      circleColor: '#22C55E'
+    },
 
-  pink: {
-    icon: L.icon({
-      iconUrl: '/static/img/music_note_pin_pink.png',
-      iconSize: [40, 40],
-      iconAnchor: [20, 35],
-      popupAnchor: [0, -35]
-    }),
-    circleColor: '#EC4899'
-  },
+    pink: {
+      icon: L.icon({
+        iconUrl: '/static/img/music_note_pin_pink.png',
+        iconSize: [40, 40],
+        iconAnchor: [20, 35],
+        popupAnchor: [0, -35]
+      }),
+      circleColor: '#EC4899'
+    },
 
-};
+  };
 
 // Store current theme
 let currentPinTheme = "default";
