@@ -54,22 +54,33 @@
         </nav>
       </div>
       <div id="settings-container" class="settings-container">
-        <button id="settings-btn" class="settings-btn" title="Settings">⚙️</button>
-        <div id="settings-popup" class="settings-popup hidden">
-          <h3>Settings</h3>
+      <button id="settings-btn" class="settings-btn" title="Settings">⚙️</button>
+
+      <div id="settings-popup" class="settings-popup hidden">
+        <h3>Settings</h3>
+
+        <div class="settings-section">
           <button id="toggle-theme" class="theme-toggle">☾</button>
-          <h8>Pin Style</h8>
+        </div>
+
+        <div class="settings-section">
+          <h4 style="font-size: 0.9rem; margin-bottom: 6px; font-weight: 600; opacity: .85;">Pin Style </h4>
           <div class="pin-style-buttons">
             <button class="pin-theme-btn" data-theme="blue">Blue</button>
             <button class="pin-theme-btn" data-theme="green">Green</button>
             <button class="pin-theme-btn" data-theme="pink">Pink</button>
             <button class="pin-theme-btn" data-theme="default">Default</button>
           </div>
-           <button id="pref-avatar" class="settings-popup-btn"> Change Avatar</button>
-           <button id="pref-card" class="settings-popup-btn">Change Player Card</button>
-          <button id="pref-reset">Reset Preferences</button>
+        </div>
+
+        <div class="settings-section">
+          <button id="pref-avatar" class="settings-popup-btn">Change Avatar</button>
+          <button id="pref-card" class="settings-popup-btn">Change Player Card</button>
+          <button id="pref-reset" class="settings-popup-btn">Reset Preferences</button>
         </div>
       </div>
+    </div>
+
     </header>
 
     <div class="container">

@@ -439,3 +439,24 @@ main.main-content {
   transform: scale(1.1);
 }
 
+.settings-section {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.pin-style-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.settings-popup-btn,
+.theme-toggle,
+.pin-theme-btn {
+  width: 100%; /* optional, looks cleaner */
+  padding: 6px 0;
+  border-radius: 8px;
+}
