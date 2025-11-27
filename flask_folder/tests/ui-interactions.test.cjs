@@ -47,19 +47,19 @@ try {
 
 // TESTS
 try {
-  // Test opening popup
+  // Test opening popup (first test, task 1)
   const popup = document.getElementById('settings-popup');
   const settingsBtn = document.getElementById('settings-btn');
 
   settingsBtn.click();
   recordResult('opens settings popup on button click', popup.classList.contains('open'));
 
-  // Test closing popup
+  // Test closing popup (second test, task 1)
   const closeBtn = document.getElementById('close-btn');
   closeBtn.click();
   recordResult('closes settings popup on close button click', !popup.classList.contains('open'));
 
-  // Test toggling theme
+  // Test the map mode toggle (third test, task 2)
   const themeBtn = document.getElementById('theme-btn');
   themeBtn.click();
   recordResult('toggles theme on theme button click', popup.classList.contains('dark-theme'));
