@@ -154,7 +154,7 @@ For this sprint our main focus was to ....
    * __Devin__ : I created my tests for the front end, added a settings popup, created the customized pins, and the ability to shift between light and dark mode on the map.
    * __Jacob__ : 
    * __Leon__ : 
-   * __Mateo__ : 
+   * __Mateo__ : I fixed some errors I had with the Spotify login flow unit and integration tests that were implemented last sprint. This sprint I added new unit tests that ensured that our application was compatible with the Spotify login flow. I also made integration tests that made sure our application tested how our application handles different scenarios that involve the Spotify login flow such as API errors, login errors, etc.
 
 * __Future Implementation__
 
