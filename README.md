@@ -133,3 +133,32 @@ For this sprint our main focus was to host the website, create and use a databas
    * Update location for pins (instead of just timing it out and replacing the song info at the old location)
 
    * link/redirect function so user can click on another person's song and see it on spotify/maybe hear a preview?
+
+# Sprint 3 Review
+
+### Demo
+We demoed the develop branch
+
+### Review and Retrospective
+
+For this sprint our main focus was to .... 
+
+* [__Retrospective__](./Documentation/Sprint2/Sprint3-Retrospective.md)
+
+* __Burnup Report:__ ![Sprint2-Burnup](./Documentation/Sprint2/Sprint3-Burnup.png)
+
+* __Contributions__
+   * [Jira Task Documentation](./Documentation/Sprint2/Sprint3-Jira.md)
+
+   * __Caden__ : 
+   * __Devin__ : I created my tests for the front end, added a settings popup, created the customized pins, and the ability to shift between light and dark mode on the map.
+   * __Jacob__ : 
+   * __Leon__ : 
+   * __Mateo__ : 
+
+* __Future Implementation__
+
+   * Getting permission from spotify for a public app 
+   * 
+   * 
+   * 
