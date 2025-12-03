@@ -1,6 +1,7 @@
 # User Stories
 
-*
+* [MM-9 Add privacy and visibility controls for user sharing](https://cs3398-enceladus-fall.atlassian.net/browse/MM-9)
+* [MM-88 Testing](https://cs3398-enceladus-fall.atlassian.net/browse/MM-88)
 
 
 # Contributions
