@@ -141,7 +141,7 @@ We demoed the develop branch
 
 ### Review and Retrospective
 
-For this sprint our main focus was to .... 
+For this sprint our main focus was to finalize aspects of the user expierence, now the use can preview other people's songs and queue them into their own spotfy accounts. There is also some user customization for the expiereience of the user. 
 
 * [__Retrospective__](./Documentation/Sprint2/Sprint3-Retrospective.md)
 
@@ -150,7 +150,7 @@ For this sprint our main focus was to ....
 * __Contributions__
    * [Jira Task Documentation](./Documentation/Sprint2/Sprint3-Jira.md)
 
-   * __Caden__ : 
+   * __Caden__ : I changed how pins are dropped and adds a side panel that allows the user to preview someone else's song. I also added a test for the spotify_tokens and song preview.
    * __Devin__ : I created my tests for the front end, added a settings popup, created the customized pins, and the ability to shift between light and dark mode on the map.
    * __Jacob__ : 
    * __Leon__ : 
