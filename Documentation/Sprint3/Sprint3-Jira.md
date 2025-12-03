@@ -14,7 +14,12 @@
 * [MM-97 Test spotify_tokens.py](https://cs3398-enceladus-fall.atlassian.net/browse/MM-97)
 
 ### Devin
-* 
+* [MM-81 Pin Color Customization](https://cs3398-enceladus-fall.atlassian.net/browse/MM-81)
+* [MM-82 Toggle Map Modes](https://cs3398-enceladus-fall.atlassian.net/browse/MM-82)
+* [MM-84 Settings Corner Pop-Up](https://cs3398-enceladus-fall.atlassian.net/browse/MM-84)
+* [MM-98 Test Settings Popup](https://cs3398-enceladus-fall.atlassian.net/browse/MM-98)
+* [MM-99 Test Map Toggle Modes](https://cs3398-enceladus-fall.atlassian.net/browse/MM-99)
+
 
 ### Jacob
 * 
