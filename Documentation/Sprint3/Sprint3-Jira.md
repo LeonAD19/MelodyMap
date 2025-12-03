@@ -2,6 +2,7 @@
 
 * [MM-9 Add privacy and visibility controls for user sharing](https://cs3398-enceladus-fall.atlassian.net/browse/MM-9)
 * [MM-88 Testing](https://cs3398-enceladus-fall.atlassian.net/browse/MM-88)
+* [MM-91 UI user personalization](https://cs3398-enceladus-fall.atlassian.net/browse/MM-91)
 
 
 # Contributions
@@ -26,7 +27,11 @@
 
 
 ### Leon
-* 
+* [MM-87 UI for user customization (frontend)](https://cs3398-enceladus-fall.atlassian.net/browse/MM-87)
+* [MM-86 UI for user customization (backend)](https://cs3398-enceladus-fall.atlassian.net/browse/MM-86)
+* [MM-89 Spotify_dao Unit Testing](https://cs3398-enceladus-fall.atlassian.net/browse/MM-89)
+* [MM-100 Spotify_dao Testing Plan](https://cs3398-enceladus-fall.atlassian.net/browse/MM-100)
+
 
 ### Mateo
 * [MM-78 Fix Errors on Unit & Integration Tests](https://cs3398-enceladus-fall.atlassian.net/browse/MM-78)

@@ -145,20 +145,20 @@ For this sprint our main focus was to finalize aspects of the user expierence, n
 
 * [__Retrospective__](./Documentation/Sprint2/Sprint3-Retrospective.md)
 
-* __Burnup Report:__ ![Sprint2-Burnup](./Documentation/Sprint2/Sprint3-Burnup.png)
+* __Burnup Report:__ ![Sprint3-Burnup](./Documentation/Sprint3/Sprint3-Burnup.png)
 
 * __Contributions__
-   * [Jira Task Documentation](./Documentation/Sprint2/Sprint3-Jira.md)
+   * [Jira Task Documentation](./Documentation/Sprint3/Sprint3-Jira.md)
 
    * __Caden__ : I changed how pins are dropped and adds a side panel that allows the user to preview someone else's song. I also added a test for the spotify_tokens and song preview.
    * __Devin__ : I created my tests for the front end, added a settings popup, created the customized pins, and the ability to shift between light and dark mode on the map.
    * __Jacob__ : 
-   * __Leon__ : 
+   * __Leon__ : I created user profile and player card selections for UI. Created backend routes for the user to select those options. I also created spotify_dao test files to test spotify send song info and get song info. This data also generated a hmtl report that I converted to a pdf.
    * __Mateo__ : I fixed some errors I had with the Spotify login flow unit and integration tests that were implemented last sprint. This sprint I added new unit tests that ensured that our application was compatible with the Spotify login flow. I also made integration tests that made sure our application tested how our application handles different scenarios that involve the Spotify login flow such as API errors, login errors, etc.
 
 * __Future Implementation__
 
    * Getting permission from spotify for a public app 
-   * 
-   * 
+   * Generate more UX for the user such as adding a liked songs or favorite playlist 
+   * Optimize the codebase to support high volume users
    * 
