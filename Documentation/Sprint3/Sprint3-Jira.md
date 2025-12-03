@@ -23,4 +23,6 @@
 * 
 
 ### Mateo
-* 
+* [MM-78 Fix Errors on Unit & Integration Tests](https://cs3398-enceladus-fall.atlassian.net/browse/MM-78)
+* [MM-80 Finish up Unit Tests that test multiple parts of the Spotify Login Flow/Other parts of website that deal with Spotify](https://cs3398-enceladus-fall.atlassian.net/browse/MM-80)
+* [MM-85 Finish up Integration Tests that test multiple parts of the Spotify login flow/other parts of website](https://cs3398-enceladus-fall.atlassian.net/browse/MM-85)
