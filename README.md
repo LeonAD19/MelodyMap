@@ -152,7 +152,7 @@ For this sprint our main focus was to finalize aspects of the user expierence, n
 
    * __Caden__ : I changed how pins are dropped and adds a side panel that allows the user to preview someone else's song. I also added a test for the spotify_tokens and song preview.
    * __Devin__ : I created my tests for the front end, added a settings popup, created the customized pins, and the ability to shift between light and dark mode on the map.
-   * __Jacob__ : 
+   * __Jacob__ : I created a script that simulates the user card polling every second, added a queueing feature where a user can a song on a pop pin, and unit test for user.js
    * __Leon__ : I created user profile and player card selections for UI. Created backend routes for the user to select those options. I also created spotify_dao test files to test spotify send song info and get song info. This data also generated a hmtl report that I converted to a pdf.
    * __Mateo__ : I fixed some errors I had with the Spotify login flow unit and integration tests that were implemented last sprint. This sprint I added new unit tests that ensured that our application was compatible with the Spotify login flow. I also made integration tests that made sure our application tested how our application handles different scenarios that involve the Spotify login flow such as API errors, login errors, etc.
 

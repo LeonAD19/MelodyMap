@@ -23,8 +23,10 @@
 
 
 ### Jacob
-* 
-
+* [MM-92 Add Song Queue] (https://cs3398-enceladus-fall.atlassian.net/browse/MM-92)
+* [MM-93 Simulate 1 Second Calls] (https://cs3398-enceladus-fall.atlassian.net/browse/MM-93)
+* [MM-94 PLanning test for User.js] (https://cs3398-enceladus-fall.atlassian.net/browse/MM-94)
+* [MM-95 Unit Test for User.js] (https://cs3398-enceladus-fall.atlassian.net/browse/MM-95)
 
 ### Leon
 * [MM-87 UI for user customization (frontend)](https://cs3398-enceladus-fall.atlassian.net/browse/MM-87)
