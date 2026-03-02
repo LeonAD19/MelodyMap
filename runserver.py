@@ -18,4 +18,4 @@ app = create_app()
 # Checking to see if app is running in this file, if so run app, debug = true allows automatic reload when code changes. 
 # Remove debug = true, when project is ready to deploy.
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
